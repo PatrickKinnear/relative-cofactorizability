@@ -1,0 +1,120 @@
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+
+%Patrick's comment colour
+\usepackage{xcolor}
+\newcommand{\pk}[1]{[\textcolor{red}{#1}]}
+\newcommand{\daj}[1]{ [\textcolor{blue}{DJ: #1}]}
+
+%Miscellaneous math symbol shortcuts:
+
+\def\res{\raise-.5ex\hbox{\ensuremath|}} %restriction symbol
+
+\usepackage{bbm}
+\def\One{\mathbbm{1}} %Boldface one symbol (for, e.g, tensor unit)
+
+\def\ot{\ensuremath\otimes} %Tensor product
+\def\bot{\ensuremath\bigotimes}
+
+\def\bt{\ensuremath\boxtimes}
+
+\def\bop{\ensuremath\bigoplus} 
+
+\def\la{\ensuremath\langle} %Angle brackets
+\def\ra{\ensuremath\rangle}
+
+%Lie algebras
+\def\g{\mathfrak{g}}
+\def\sl{\mathfrak{sl}}
+\def\gl{\mathfrak{gl}}
+\def\so{\mathfrak{so}}
+
+% Auto sizing bracket
+\usepackage{mathtools} 
+
+\DeclarePairedDelimiter\autobracket{(}{)}
+\newcommand{\brac}[1]{\autobracket*{#1}}
+
+\DeclarePairedDelimiter\autosquarebracket{[}{]}
+\newcommand{\sqbrac}[1]{\autosquarebracket*{#1}}
+
+%theorem environments setup
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{claim}[thm]{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{qu}[thm]{Question}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{rmk}[thm]{Remark}
+
+% This is to make the citation appears non-italic in Theorem, Propositions, etc.
+\makeatletter
+\def\@cite#1#2{{\normalfont[{#1\if@tempswa , #2\fi}]}}
+\makeatother
+
+%Blackface bold macros
+\def\R{\mathbb{R}}
+\def\C{\mathbb{C}}
+\def\F{\mathbb{F}}
+\def\Z{\mathbb{Z}}
+\def\N{\mathbb{N}}
+
+%Hard-coding in common mathrm words:
+\DeclareMathOperator{\Id}{\mathrm{Id}}
+\DeclareMathOperator{\id}{\mathrm{id}}
+\DeclareMathOperator{\Img}{\mathrm{im}}
+\DeclareMathOperator{\Ker}{\mathrm{ker}}
+\DeclareMathOperator{\coker}{\mathrm{coker}}
+\DeclareMathOperator{\Hom}{\mathrm{Hom}}
+\DeclareMathOperator{\End}{\mathrm{End}}
+\DeclareMathOperator{\Aut}{\mathrm{Aut}}
+
+\DeclareMathOperator{\Sym}{\mathrm{Sym}}
+\DeclareMathOperator{\Soc}{\mathrm{Soc}} %Socle
+\DeclareMathOperator{\gr}{\mathrm{gr}} %Associated graded
+\DeclareMathOperator{\op}{\mathrm{op}} %Opposite
+
+\DeclareMathOperator{\Rep}{\mathrm{Rep}}
+\DeclareMathOperator{\Vect}{\mathrm{Vect}}
+\DeclareMathOperator{\Mod}{\mathrm{Mod}}
+
+\DeclareMathOperator{\colim}{\mathrm{colim}}
+\DeclareMathOperator{\ev}{\mathrm{ev}} %Evaluation
+\DeclareMathOperator{\coev}{\mathrm{coev}} %Coevaluation
+
+%Lie groups
+\def\SL{\mathfrak{SL}}
+\def\GL{\mathfrak{GL}}
+\def\SO{\mathfrak{SO}}
+
+%Mathcal capitals defined with \c prefix
+\def\cA{\mathcal{A}}
+\def\cB{\mathcal{B}}
+\def\cC{\mathcal{C}}
+\def\cD{\mathcal{D}}
+\def\cE{\mathcal{E}}
+\def\cF{\mathcal{F}}
+\def\cG{\mathcal{G}}
+\def\cH{\mathcal{H}}
+\def\cI{\mathcal{I}}
+\def\cJ{\mathcal{J}}
+\def\cK{\mathcal{K}}
+\def\cL{\mathcal{L}}
+\def\cM{\mathcal{M}}
+\def\cN{\mathcal{N}}
+\def\cO{\mathcal{O}}
+\def\cP{\mathcal{P}}
+\def\cQ{\mathcal{Q}}
+\def\cR{\mathcal{R}}
+\def\cS{\mathcal{S}}
+\def\cT{\mathcal{T}}
+\def\cU{\mathcal{U}}
+\def\cV{\mathcal{V}}
+\def\cW{\mathcal{W}}
+\def\cX{\mathcal{X}}
+\def\cY{\mathcal{Y}}
+\def\cZ{\mathcal{Z}}
