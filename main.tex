@@ -6,7 +6,27 @@
 \usepackage{quiver}
 \usepackage{pkinne}
 
-\title{}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{intcalc}
+\usetikzlibrary{positioning,calc}
+
+\newcommand{\stackspace}{4}
+\newcommand{\stackalternate}[2][1cm]{\;\tikz[baseline, yshift=.65ex]%
+    {\foreach \k [evaluate=\k as \r using (.5*#2+.5-\k)*\stackspace] in {1,...,#2}{%
+    \ifodd\k{\draw[->](0,\r pt)--(#1,\r pt);}%
+    \else{\draw[<-](0,\r pt)--(#1,\r pt);}\fi
+    }}\;}
+\newcommand{\stackrightarrow}[2][1cm]{\;\tikz[baseline, yshift=.65ex]%
+    {\foreach \k [evaluate=\k as \r using (.5*#2+.5-\k)*\stackspace] in {1,...,#2}{%
+    \draw[->](0,\r pt)--(#1,\r pt);%
+    }}\;}
+\newcommand{\stackleftarrow}[2][1cm]{\;\tikz[baseline, yshift=.65ex]%
+    {\foreach \k [evaluate=\k as \r using (.5*#2+.5-\k)*\stackspace] in {1,...,#2}{%
+    \draw[<-](0,\r pt)--(#1,\r pt);
+    }}\;}
+
+\title{The Invertibility Conjecture}
 \author{Patrick Kinnear}
 \date{}
 
@@ -15,7 +35,74 @@
 
 \begin{document}
 
-Hello World!
+The invertibility conjecture is that $\Rep_q(G)$ is
+invertible as a 1-morphism $\Rep(G) \to \Rep(G)$ in the Morita category $\Alg_3(\Pr)$.
+
+The following theorem characterises invertible 1-morphisms in $\Alg_3(\Pr)$.
+
+\begin{thm}
+Let $\cA, \cB$ be $E_3$-algebras in $\cS$, and $\cC$ a morphism $\cA \to \cB$. That is, $\cC$ is an $E_2$-algebra in $(\cA, \cB)$-bimodules, or equivalently, an $E_2$-algebra in $\cS$ equipped with a braided tensor functor $\cA \bt \cB^{3 \op} \to Z_2(\cC)$. Then $\cC$ is invertible, considered as a morphism of $E_3$-algebras, if and only if it is dualizable as a module over $\cA, \cB, \cC^e_\cA := \cC^{\ot \op} \bt_\cA \cC, \cC^e_\cB := \cC \bt_\cB \cC^{\ot \op}, \cC^{\sigma \op} \bt_\cA \cC, \cC \bt_\cB \cC^{\sigma \op}, HC_\cA(\cC) := \cC \bt_{\cC^{\sigma \op} \bt_\cA \cC} \cC^{\ot \op}$, and $HC_\cB(\cC) := \cC \bt_{\cC \bt_\cB \cC^{\sigma \op}} \cC^{\ot \op}$ and moreover the following maps are isomorphisms:
+\begin{enumerate}
+        \item $HC_\cA(\cC) \to \Hom_\cB(\cC, \cC)$.
+        \item $\cC^{\sigma \op} \bt_\cA \cC \to \Hom_{\cC^e_\cB}(\cC, \cC)$.
+        \item $\cC \bt_\cB \cC^{\ot \op} \to \Hom_{\cC^{\sigma \op} \bt_\cA \cC}(\cC, \cC)$
+        \item $\cB \to \Hom_{HC_\cA(\cC)}(\cC, \cC)$.
+        \item $HC_\cB(\cC) \to \Hom_\cA(\cC, \cC)$.
+        \item $\cA \to \Hom_{HC_\cB(\cC)}(\cC, \cC)$.
+\end{enumerate}
+\end{thm}
+
+We therefore need to be able to compute expressions such as $\Rep_q(G)^{\sigma \op} \bt_{\Rep(G)} \Rep_q(G)$.
+
+We \pk{note that} the functors in the conditions above are braided tensor functors \pk{!} so it suffices to show they are equivalences at the level of plain categories (we may ignore $\sigma \op, \ot \op$ etc).
+
+Moreover, in the case we are considering, that maps 4 and 6 are equivalences is well-known.
+
+We begin by attempting to compute $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$. Recall that this is given by the colimit of the diagram below.
+
+\[
+\Rep_q(G) \bt \Rep_q(G) \stackleftarrow{2} \Rep_q(G) \bt \Rep(G) \Rep_q(G) \stackleftarrow{3} \Rep_q(G) \bt \Rep(G) \bt \Rep(G) \bt \Rep_q(G) \stackleftarrow{4} \dots
+\]
+
+Now, the following theorem is implicit in Lurie's Higher Algebra but is recounted in an accessible form by Gaitsgory.
+
+\begin{thm}[{\cite[Cor. C.2.3]{gaitsgorySheavesCategoriesNotion2015}}]
+Let $\cA$ be a monoidal category acting on $\cC$ on the right and on $\cD$ on the left. If either: the two action functors and the monoidal product admit right adjoints, and the right adjoint to the monoidal product is a map of $\cA$-module categories; or the two action functors and the monoidal product admit left adjoints, and the left adjoint to the monoidal product is a map of $\cA$-module categories; then the map
+\[
+\cC \bt \cD \to \cC \bt_\cA \cD
+\]
+admits a right adjoint and the adjunction is monadic, with the monad isomorphic as a plain functor to
+\[
+(\mathrm{act}_\cC \ot \Id) \circ (\Id \ot \mathrm{act}_\cD)^R.
+\]
+\end{thm}
+
+Then if we can verify the conditions of this theorem, this will give a monadic description of the relative tensor product. The monoidal multiplication of $\Rep(G)$ has a right adjoint $X \mapsto X \bt X$ (universal property of tensor products of representations).
+
+We would like to show that the map
+
+\begin{align*}
+\Rep_q(G) \bt \Rep(G) &\to \Rep_q(G)\\
+V \bt W &\mapsto V \ot Fr^*(W)
+\end{align*}
+
+has a right adjoint. This should be something like the map
+\[
+X \mapsto X^{u_q(G)}
+\]
+or
+\[
+X \mapsto X/X^{u_q(G)}
+\]
+where $u_q(G) \subseteq \Ures_q$ is the small quantum group and we expect there is an adjunction $(Fr^* \dashv -^{u_q(G)})$ or $(Fr^* \dashv -/-^{u_q(G)})$. If this is the case, then as we claim the right action has a right adjoint (and similarly, so does the left action).
+
+Supposing we have dealt with this, we then have that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is equivalent to algebras for the monad
+\[
+(\mathrm{act}_\cC \ot \Id) \circ (\Id \ot \mathrm{act}_\cD)^R.
+\]
+on $\Rep_q(G) \bt \Rep_q(G)$.
+
+
 
 \printbibliography
 
