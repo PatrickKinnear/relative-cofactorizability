@@ -33,7 +33,11 @@
 \usepackage{biblatex}
 \addbibresource{invertibility-conjecture.bib}
 
+\newcommand\tens{\mathrm{tens}}
+
 \begin{document}
+
+\maketitle
 
 The invertibility conjecture is that $\Rep_q(G)$ is
 invertible as a 1-morphism $\Rep(G) \to \Rep(G)$ in the Morita category $\Alg_3(\Pr)$.
@@ -52,13 +56,66 @@ Let $\cA, \cB$ be $E_3$-algebras in $\cS$, and $\cC$ a morphism $\cA \to \cB$. T
 \end{enumerate}
 \end{thm}
 
-We therefore need to be able to compute expressions such as $\Rep_q(G)^{\sigma \op} \bt_{\Rep(G)} \Rep_q(G)$.
+After \cite{brochierInvertibleBraidedTensor2020}, we refer to conditions 1 and 5 as relative cofactorizability, conditions 2 and 3 as relative factorizability, and conditions 4 and 6 as relative non-degeneracy. We will treat these in turn.
 
 We \pk{note that} the functors in the conditions above are braided tensor functors \pk{!} so it suffices to show they are equivalences at the level of plain categories (we may ignore $\sigma \op, \ot \op$ etc).
 
-Moreover, in the case we are considering, that maps 4 and 6 are equivalences is well-known.
+\section{Relative non-degeneracy}
 
-We begin by attempting to compute $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$. Recall that this is given by the colimit of the diagram below.
+Since our background category $\Pr$ is a 2-category, we can establish that $\Hom_{HC_\cA(\cC)}(\cC, \cC) \simeq Z_2(\cC)$ \pk{give the argument! Uses ideas such as those in \cite{laugwitzRelativeMonoidalCenter2020, ben-zviQuantumCharacterVarieties2018}}.
+
+Then it is understood that $\Rep(G) \simeq Z_2(\Rep_q(G))$. See \cite{ganevQuantumFrobeniusCharacter2020, negronLogmodularQuantumGroups2021}.
+
+This establishes relative non-degeneracy.
+
+\section{Relative factorizability}
+
+%We therefore need to be able to compute expressions such as $\Rep_q(G)^{\sigma \op} \bt_{\Rep(G)} \Rep_q(G)$.
+
+We begin with the following computation of $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$.
+
+\begin{prop}
+\label{p-Rep_q_Rep_Rep_q-is-O(G)-mod}
+There is an equivalence
+\[
+\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-\mod(\Rep_q(G) \bt \Rep_q(G))
+\]
+such that the tensor product functor $T : \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \to \Rep_q(G)$ is equivalent to the functor
+\[
+a \bt b \mapsto a \bt b \bt_{\cO(G)} k
+\]
+\end{prop}
+
+We define $o_q(G) = TT^R(\One) \in \Rep_q(G)$.
+
+\begin{prop}
+\label{p-factorizability-equivs}
+We have equivalences
+\begin{enumerate}
+\item \label{eq-Rep_q_Rep_Rep_q-is-o_q-comod} $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq o_q(G)-comod(\Rep_q(G))$,
+\item \label{eq-rel-Z_1-is-o_q-mod} $\Hom_{\Rep_q(G)^e_{\Rep(G)}}(\Rep_q(G)) \simeq o_q(G)-mod(\Rep_q(G))$.
+\end{enumerate}
+\end{prop}
+
+There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$. Under such a pairing, the factorizability map becomes
+\[
+o_q(G)-comod(\Rep_q(G)) \xrightarrow{\Omega} o_q(G)-mod(\Rep_q(G))
+\]
+which is an equivalence if and only if $\Omega$ is nondegenerate. Therefore, relatie factorizability is established if we can show the following.
+
+\begin{prop}
+\label{p-Omega-nondegenerate}
+The pairing $\Omega : o_q(G) \ot o_q(G) \to \One$ is nondegenerate.
+\end{prop}
+
+\begin{proof}
+We notice that, under the forgetful functor $\Rep_q(G) \to \Rep u_q(G)$ induced by $u_q(G) \hookrightarrow \Ures_q(G)$, we have $o_q(G)$ is the canonical coend of \cite{brochierInvertibleBraidedTensor2020} \pk{why?}. Then, for $q$ \pk{sufficiently nice}, $\Rep u_q(G)$ is an invertible finite tensor category \cite[Rmk. 3.12]{brochierInvertibleBraidedTensor2020} hence the pairing $\Omega$ is non-degenrate by \cite[Thm. 3.20]{brochierInvertibleBraidedTensor2020}.
+\end{proof}
+Therefore, the relative factorizability conditions hold.
+
+Below we sketch the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
+
+Recall that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is given by the colimit of the diagram below.
 
 \[
 \Rep_q(G) \bt \Rep_q(G) \stackleftarrow{2} \Rep_q(G) \bt \Rep(G) \Rep_q(G) \stackleftarrow{3} \Rep_q(G) \bt \Rep(G) \bt \Rep(G) \bt \Rep_q(G) \stackleftarrow{4} \dots
@@ -67,7 +124,7 @@ We begin by attempting to compute $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$. Recall th
 Now, the following theorem is implicit in Lurie's Higher Algebra but is recounted in an accessible form by Gaitsgory.
 
 \begin{thm}[{\cite[Cor. C.2.3]{gaitsgorySheavesCategoriesNotion2015}}]
-Let $\cA$ be a monoidal category acting on $\cC$ on the right and on $\cD$ on the left. If either: the two action functors and the monoidal product admit right adjoints, and the right adjoint to the monoidal product is a map of $\cA$-module categories; or the two action functors and the monoidal product admit left adjoints, and the left adjoint to the monoidal product is a map of $\cA$-module categories; then the map
+Let $\cA$ be a monoidal category acting on $\cC$ on the right and on $\cD$ on the left. If either: the two action functors and the monoidal product admit continuous right adjoints, and the right adjoint to the monoidal product is a map of $\cA$-module categories; or the two action functors and the monoidal product admit left adjoints, and the left adjoint to the monoidal product is a map of $\cA$-module categories; then the map
 \[
 \cC \bt \cD \to \cC \bt_\cA \cD
 \]
@@ -77,24 +134,36 @@ admits a right adjoint and the adjunction is monadic, with the monad isomorphic 
 \]
 \end{thm}
 
-Then if we can verify the conditions of this theorem, this will give a monadic description of the relative tensor product. The monoidal multiplication of $\Rep(G)$ has a right adjoint $X \mapsto X \bt X$ (universal property of tensor products of representations).
+Then if we can verify the conditions of this theorem, this will give a monadic description of the relative tensor product.
+
+By \cite[Definition-Proposition 4.1]{brochierDualizabilityBraidedTensor2018}, if $\Rep(G)$ is cp-rigid then its multiplication admits a cocontinuous right adjoint, e.g. an adjoint in $\Pr$. To be cp-rigid means all compact projectives are left and right dualizable. Projective means the existence of a ``dual basis", does being compact imply this is finite? Then any category $R$-mod is cp-rigid...
+
+\pk{How to show this right adjoint is continuous?}
+
+%The monoidal multiplication of $\Rep(G)$ has a right adjoint $X \mapsto X \bt X$ (universal property of tensor products of representations).
 
 We would like to show that the map
 
 \begin{align*}
-\Rep_q(G) \bt \Rep(G) &\to \Rep_q(G)\\
+\mathrm{act}_{\Rep_q(G)} : \Rep_q(G) \bt \Rep(G) &\to \Rep_q(G)\\
 V \bt W &\mapsto V \ot Fr^*(W)
 \end{align*}
 
-has a right adjoint. This should be something like the map
+has a right adjoint, given by
 \[
-X \mapsto X^{u_q(G)}
+\mathrm{act}^R(Y) = \int^{X \in \Rep^{\mathrm{fd}}(G)}(Y \ot Fr^*(X^\vee)) \boxtimes X.
 \]
-or
-\[
-X \mapsto X/X^{u_q(G)}
-\]
-where $u_q(G) \subseteq \Ures_q$ is the small quantum group and we expect there is an adjunction $(Fr^* \dashv -^{u_q(G)})$ or $(Fr^* \dashv -/-^{u_q(G)})$. If this is the case, then as we claim the right action has a right adjoint (and similarly, so does the left action).
+The proof is analogous to Section 1.2 of \cite{kalmykovCategoricalApproachDynamical2020} \pk{The key is to understand Prop. 1.5}. Since it's a coend, the right adjoint preserves colimits so exists in $\Pr$. \pk{what about continuity?}
+
+%This should be something like the map
+%\[
+%X \mapsto X^{u_q(G)}
+%\]
+%or
+%\[
+%X \mapsto X/X^{u_q(G)}
+%\]
+%where $u_q(G) \subseteq \Ures_q$ is the small quantum group and we expect there is an adjunction $(Fr^* \dashv -^{u_q(G)})$ or $(Fr^* \dashv -/-^{u_q(G)})$. If this is the case, then as we claim the right action has a right adjoint (and similarly, so does the left action).
 
 Supposing we have dealt with this, we then have that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is equivalent to algebras for the monad
 \[
@@ -102,7 +171,70 @@ Supposing we have dealt with this, we then have that $\Rep_q(G) \bt_{\Rep(G)} \R
 \]
 on $\Rep_q(G) \bt \Rep_q(G)$.
 
+\section{Relative cofactorizability}
+We echo the argument of \cite{brochierInvertibleBraidedTensor2020} that cofactorizability is equivalent to factorizability. Recall the functor
+\begin{align*}
+\tens: \cC &\to \Fun(\cC, \cC)\\
+x &\mapsto x \ot -
+\end{align*}
 
+We begin with the following claim.
+
+\begin{prop}
+The functor $\tens$ is the dual of $T : \cC \bt \cC \to \cC$ as a map of $\cC_1$-modules (here $\cC_1$ denoted the left factor of $\cC$ in $\cC \bt \cC$).
+\end{prop}
+
+\begin{proof}(Idea) Clearly the left copy of $\cC$ is left-dualizable as a $\cC$-module. So we have
+\begin{align*}
+\Hom(\cC \bt \cC, \cC) &\simeq \Hom(\cC, \cC^{\vee} \bt \cC)\\
+f &\mapsto (1 \ot f) \circ (coev' \ot 1)
+\end{align*}
+and we have
+\[
+T \mapsto (c \mapsto (\sum c^i \bt c_i) \bt c \mapsto \sum c^i \bt (c_i \ot c))
+\]
+where we see that the right functor is simply $\tens$. \pk{possibly on the right?}
+\end{proof}
+
+Then it follows that:
+
+\begin{prop}
+$T$ has a left adjoint which is a functor of $\cC \bt \cC$-module categories if and only if $\tens$ has a right adjoint.
+\end{prop}
+
+\begin{proof}
+The idea is that, $(T^{\vee})^R = (T^L)^{\vee}$. \pk{A bit muddled on this!}
+\end{proof}
+
+We \pk{claim} that in our case $T$ has a left adjoint, so $\tens$ has a right adjoint, and we define $E = \tens^R(\One)$.
+
+We can also argue the following.
+
+\begin{prop}
+There is an equivalence
+\[
+HC_{\cA}(\cC) \simeq F-mod(\cC).
+\]
+\end{prop}
+
+\begin{proof}
+Let $T : \Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ the tensor product functor. \pk{Recall} that $\Rep_q(G) \simeq T^R(\One)-mod(\Rep_q(G) \bt \Rep_q(G))$. Now, it is a \pk{fact} that
+\[
+A-mod(\cC) \bt_\cC \cM \simeq A-mod(\cM)
+\]
+(\pk{what conditions here?}) where $\cM$ is a $\cC$-module category. Here, we would like to take $\cC = \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-\mod(\Rep_q(G) \bt \Rep_q(G))$, $\cM \simeq \Rep_q(G)$, and somehow we'd like $A-mod(\cC) \simeq \Rep_q(G)$. Then the displayed identity will give $HC_{\Rep(G)}(\Rep_q(G)) \simeq A-mod(\Rep_q(G))$.
+\end{proof}
+
+This is related to Prop \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
+
+Now, there exists a map $Dr: F \to E$ which should be related to $\Omega$ by tensor-hom. Under the above identifications, the relative cofactorizability becomes
+\begin{align*}
+F-mod(\cC) &\to E-mod(\cC)\\
+M &\mapsto M \ot_F E
+\end{align*}
+along $Dr$. But this is an equivalence if and only if $Dr$ is an isomorphism, if and only if $\Omega$ is non-degenerate, which it is by Proposition \ref{p-Omega-nondegenerate}.
+
+Then this establishes relative cofactorizability.
 
 \printbibliography
 
