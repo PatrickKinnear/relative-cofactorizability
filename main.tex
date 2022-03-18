@@ -5,6 +5,67 @@
 
 \usepackage{quiver}
 \usepackage{pkinne}
+\usepackage{stmaryrd} % For mapsfrom
+\usepackage{comment}
+
+\usepackage{amsmath}
+\usepackage{pict2e}
+
+\makeatletter
+\newcommand{\adjunction}{\@ifstar\named@adjunction\normal@adjunction}
+\newcommand{\normal@adjunction}[4]{%
+  % #1 : #2 <arrows> #3 : #4
+  #1\colon #2%
+  \mathrel{\vcenter{%
+    \offinterlineskip\m@th
+    \ialign{%
+      \hfil$##$\hfil\cr
+      \longrightharpoonup\cr
+      \noalign{\kern-.3ex}
+      \smallbot\cr
+      \longleftharpoondown\cr
+    }%
+  }}%
+  #3 \noloc #4%
+}
+\newcommand{\named@adjunction}[4]{%
+  % #1 : #2 <arrows> #3 : #4
+  #2%
+  \mathrel{\vcenter{%
+    \offinterlineskip\m@th
+    \ialign{%
+      \hfil$##$\hfil\cr
+      \scriptstyle#1\cr
+      \noalign{\kern.1ex}
+      \longrightharpoonup\cr
+      \noalign{\kern-.3ex}
+      \smallbot\cr
+      \longleftharpoondown\cr
+      \scriptstyle#4\cr
+    }%
+  }}%
+  #3%
+}
+\newcommand{\longrightharpoonup}{\relbar\joinrel\rightharpoonup}
+\newcommand{\longleftharpoondown}{\leftharpoondown\joinrel\relbar}
+\newcommand\noloc{%
+  \nobreak
+  \mspace{6mu plus 1mu}
+  {:}
+  \nonscript\mkern-\thinmuskip
+  \mathpunct{}
+  \mspace{2mu}
+}
+\newcommand{\smallbot}{%
+  \begingroup\setlength\unitlength{.15em}%
+  \begin{picture}(1,1)
+  \roundcap
+  \polyline(0,0)(1,0)
+  \polyline(0.5,0)(0.5,1)
+  \end{picture}%
+  \endgroup
+}
+\makeatother
 
 \usepackage{tikz}
 \usepackage{ifthen}
@@ -15,8 +76,7 @@
 \newcommand{\stackalternate}[2][1cm]{\;\tikz[baseline, yshift=.65ex]%
     {\foreach \k [evaluate=\k as \r using (.5*#2+.5-\k)*\stackspace] in {1,...,#2}{%
     \ifodd\k{\draw[->](0,\r pt)--(#1,\r pt);}%
-    \else{\draw[<-](0,\r pt)--(#1,\r pt);}\fi
-    }}\;}
+    \else{\draw[<-](0,\r pt)--(#1,\r pt);}\fi    }}\;}
 \newcommand{\stackrightarrow}[2][1cm]{\;\tikz[baseline, yshift=.65ex]%
     {\foreach \k [evaluate=\k as \r using (.5*#2+.5-\k)*\stackspace] in {1,...,#2}{%
     \draw[->](0,\r pt)--(#1,\r pt);%
@@ -62,6 +122,17 @@ We \pk{note that} the functors in the conditions above are braided tensor functo
 
 \section{Relative non-degeneracy}
 
+\begin{defn}
+Let $\cC$ a braided tensor category with braiding $\sigma$. A braided $\cC$-module category is a right $\cC$-module category with a natural automorphism $E$ of the action $\ot : \cM \ot \cC \to \cM$ such that for all $M \in \cM, X, Y \in \cC$ we have
+\end{defn}
+
+Recall that $\cC$ is a braided tensor category, i.e. an $E_2$-algebra in $\Pr$. It has been established that $E_2$-modules for an $E_2$-algebra are given by modules for factorization homology over the annulus \cite{ginotNotesFactorizationAlgebras2014}, so that $E_2$-modules for $\cC$ are equivalent to the 2-category of $HC(\cC)$-module categories. We recall from \cite[Thm. 3.11]{ben-zviQuantumCharacterVarieties2018} that $E_2$-modules for a braided tensor category are moreover equivalent to braided module categories.
+
+Now, we will want to say that $HC_{\cA}(\cC)$-module categories are equivalent to braided module categories where $\cA$ acts trivially on the action functor. \pk{EXPLAIN THIS}. Then we have a forgetful functor to braided module categories, so that there is an equivalence on $\Hom$ categories, and
+\[
+\End_{HC_\cA(\cC)}(\cC) \simeq \End_{HC(\cC)}(\cC) \simeq Z_2(\cC).
+\]
+
 Since our background category $\Pr$ is a 2-category, we can establish that $\Hom_{HC_\cA(\cC)}(\cC, \cC) \simeq Z_2(\cC)$ \pk{give the argument! Uses ideas such as those in \cite{laugwitzRelativeMonoidalCenter2020, ben-zviQuantumCharacterVarieties2018}}.
 
 Then it is understood that $\Rep(G) \simeq Z_2(\Rep_q(G))$. See \cite{ganevQuantumFrobeniusCharacter2020, negronLogmodularQuantumGroups2021}.
@@ -86,22 +157,155 @@ a \bt b \mapsto a \bt b \bt_{\cO(G)} k
 \]
 \end{prop}
 
+The below lemma follows from the proof of \cite[Thm. 4.18]{ben-zviIntegratingQuantumGroups2018}.
+
+\begin{lemma}
+There is an equivalence of $\Rep_q(G) \bt \Rep_q(G)$-module categories
+\[
+\Rep_q(G) \simeq \cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G)).
+\]
+\end{lemma}
+
+%\begin{proof}
+%\pk{Recall} that $\Rep_q(G)$ is cp-rigid, and so the tensor product functor admits a right adjoint, given by
+%\[
+%Y \mapsto \int^{X \in cp} (Y \ot X^{\vee}) \bt X.
+%\]
+%Now let us apply the crude monadicity theorem. This says that, if $\ot^R$ reflects isomorphisms and preserves coequalizers of reflexive pairs, then it is a monadic functor.
+
+%That $\ot^R$ preserves coequalizers follows since it is cocontinuous by a similar argument to Claim \ref{p-act^R-is-coco}.
+
+%To show that it is conservative, we notice that $Y \mapsto Y \ot X^{\vee}$  is conservative for nonzero $X^{\vee}$, from reasoning about vector spaces. Moreover, $A \mapsto A \bt X$ for nonzero $X$ is also conservative, since for any $B$, we will have
+%\[
+%\Hom(B \bt X, A \bt X) \cong \Hom(B, A) \ot \Hom(X, X)
+%\]
+%and the dimension of $\Hom(X, X) \geq 0$. So if $A \bt X = %0$ then $\Hom(B, A) = 0$, so $A$ is terminal. Similarly it %is inital, so it is the zero object. This means that
+%\[
+%Y \mapsto Y \ot X^{\vee} \mapsto (Y \ot X^{\vee}) \bt X
+%\]
+%is conservative. Now, can we show that the coend is %conservative? \pk{!!}
+
+%This being understood, the equivalence follows.
+%\end{proof}
+
+Now, the quantum Frobenius map (on taking restricted duals) gives an algebra map
+\[
+\cO(G) \to \cO_q(G)
+\]
+which is \pk{in fact} a map of bialgebras. Whenever there is a map $A \to B$ fo bialgebras, we always have an equivalence of categories
+\[
+B-mod_{A-mod(\cC)} \simeq B-mod(\cC)
+\]
+by some \pk{straightforward} arguments. we then have the following.
+
+\begin{cor}
+\label{cl-Rep_q-is-O_q-mod-in-O-mod}
+There is an equivalence
+\[
+\Rep_q(G) \simeq \cO_q(G)-mod(\Rep_q(G) \bt_{\Rep_G} \Rep_q(G))
+\]
+where on the RHS we regard $\Rep_q(G) \bt_{\Rep_G} \Rep_q(G)$ as $\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ by Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
+\end{cor}
+
+We notice that forgetting $\cO(G)$-module structures, we then have an action of $\Rep_q(G) \bt_{\Rep_(G)} \Rep_q(G) \simeq \cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ on $\Rep(G)$ via the action of $\Rep_q(G) \bt \Rep_q(G)$ \pk{check!!}.
+
+The situation is summarised in the following diagram:
+
+% old: https://q.uiver.app/?q=WzAsNCxbMiwyLCJDIl0sWzQsMiwiXFxSZXBfcShHKSJdLFswLDAsIkEiXSxbMCwyLCJCIl0sWzAsMSwiVCIsMl0sWzIsMSwiXFxvdCJdLFsyLDBdLFswLDMsIlxcc2ltIiwyXSxbMiwzLCJGcmVlIiwyLHsib2Zmc2V0IjoxfV0sWzMsMiwiRm9yZyIsMix7Im9mZnNldCI6MX1dXQ==
+
+% https://q.uiver.app/?q=WzAsNSxbMywwLCJcXFJlcF9xKEcpIFxcYnQgXFxSZXBfcShHKSJdLFs2LDIsIlxcUmVwX3EoRykiXSxbMywyLCJcXFJlcF9xKEcpIFxcYnRfe1xcUmVwKEcpfSBcXFJlcF9xKEcpIl0sWzAsMiwiXFxjTyhHKS1tb2QoXFxSZXBfcShHKSBcXGJ0IFxcUmVwX3EoRykpIl0sWzMsNCwiXFxjT19xKEcpLW1vZChcXFJlcF9xKEcpIFxcYnQgXFxSZXBfcShHKSkiXSxbMCwxLCJcXG90Il0sWzAsMl0sWzAsMywidHJpdiIsMCx7Im9mZnNldCI6LTF9XSxbMywwLCItXFxvdF97XFxjTyhHKX0gXFxPbmUiLDAseyJvZmZzZXQiOi0xfV0sWzIsMywiXFxzaW0iLDIseyJvZmZzZXQiOjF9XSxbMiwxLCJUIl0sWzMsNCwiLVxcb3Rfe1xcY08oRyl9IFxcY09fcShHKSIsMix7Im9mZnNldCI6MX1dLFs0LDEsIlxcc2ltIiwyXV0=
+\[\begin{tikzcd}
+	&&& {\Rep_q(G) \bt \Rep_q(G)} \\
+	\\
+	{\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))} &&& {\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)} &&& {\Rep_q(G)} \\
+	\\
+	&&& {\cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G))}
+	\arrow["\ot", from=1-4, to=3-7]
+	\arrow[from=1-4, to=3-4]
+	\arrow["triv", shift left=1, from=1-4, to=3-1]
+	\arrow["{-\ot_{\cO(G)} \One}", shift left=1, from=3-1, to=1-4]
+	\arrow["\sim"', shift right=1, from=3-4, to=3-1]
+	\arrow["T", from=3-4, to=3-7]
+	\arrow["{-\ot_{\cO(G)} \cO_q(G)}"', shift right=1, from=3-1, to=5-4]
+	\arrow["\sim"', from=5-4, to=3-7]
+\end{tikzcd}\]
+
+
+We will abuse notation and refer to the functor corresponding to $T$ under the equivalence of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod} by $T$ also. We note that by similar arguments to those in the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}, we should be able to show that $\Rep_q(G)$ is cp-rigid. Then it will follow that $\ot$ has a right adjoint, and so by composing adjoints we see that $T$ has a right adjoint $T^R = triv \circ \ot^R$. \pk{check that it is triv here!}
+
 We define $o_q(G) = TT^R(\One) \in \Rep_q(G)$.
+
+\begin{comment}
+We will also need the following general fact.
+
+\begin{claim}
+\label{cl-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}
+Let $\cM$ be a $\cC$-module category, and $A \in \cC$ an algebra object. Then there is an equivalence
+\[
+Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM).
+\]
+\end{claim}
+
+\begin{proof}
+We claim that we have the following adjunction:
+\begin{align*}
+\adjunction*{}{\cM&}{Fun_\cC(LMod_A(\cC), \cM)}{}\\
+m &\mapsto (v \mapsto m \ot v)\\
+F(A) &\mapsfrom F
+\end{align*}
+where $m \ot v$ is the right action on $\cM$ of $\cC$. Let us check this is an adjunction, i.e. that
+\[
+\Hom(m \ot - , F) \cong \Hom(m, F(A)).
+\]
+Given $\beta : m \ot - \to F$, we obtain a map $\beta_A : m \ot A \to F(A)$, and then a map $m \cong m \ot \One \to m \ot A$ given by the unit $\One \to A$ in $\cC$. This composed with $\beta_A$ gives a map $m \to F(A)$. Conversely, given $f : m \to F(A)$, then for any $v \in LMod_A(\cC)$, the map
+\[
+m \ot v \xrightarrow{f \ot 1} F(A) \ot v \cong F(A \ot v) \cong F(v)
+\]
+gives a natural transformation $m \ot - \to F$. \pk{Is the last isomorphism good? It factors through free-forgetful, no?}
+
+\end{proof}
+\end{comment}
 
 \begin{prop}
 \label{p-factorizability-equivs}
 We have equivalences
 \begin{enumerate}
 \item \label{eq-Rep_q_Rep_Rep_q-is-o_q-comod} $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq o_q(G)-comod(\Rep_q(G))$,
-\item \label{eq-rel-Z_1-is-o_q-mod} $\Hom_{\Rep_q(G)^e_{\Rep(G)}}(\Rep_q(G)) \simeq o_q(G)-mod(\Rep_q(G))$.
+\item \label{eq-rel-Z_1-is-o_q-mod} $\Hom_{\Rep_q(G)^e_{\Rep(G)}}(\Rep_q(G), \Rep_q(G)) \simeq o_q(G)-mod(\Rep_q(G))$.
 \end{enumerate}
 \end{prop}
+
+\begin{proof}
+For the first equivalence, we can try to use the crude co-monadicity theorem. This says that, if $T$ has a right adjoint, reflects isomorphisms, and the source has and $T$ preserves equalizers of co-reflexive pairs, then $T$ is comonadic.
+
+As observed above, $T$ has a right adjoint. It suffices to show that $T$ is conservative and preserves equalizers. From the diagram, to show that $T$ is conservative and preserves equalizers, it suffices to show this for the functor $- \ot_{\cO(G)} \cO_q(G)$ does. Here, we regard $\cO_q(G)$ as an object in $\Rep_q(G) \bt \Rep_q(G)$, its $\cO(G)$-module structure coming from the map $\cO(G) \to \cO_q(G)$ dual to the quantum Frobenius $\Ures_q \to U$. In this context, the property of being conservative and preserving equalizers is equivalently known as saying that $\cO_q(G)$ is faithfully flat as an $\cO(G)$-module. This means that tensoring with $\cO_q(G)$ is an exact functor and reflects exact sequences: see \cite{kordeFLATMORPHISMSARE} for details on how these definitons relate. Now, the module structure map $\cO(G) \to \cO_q(G)$ is a map of Hopf algebras. Then, since $\cO(G)$ is commutative, it follows from \cite[Prop. 3.12]{arkhipovAnotherRealizationCategory2002} that $\cO_q(G)$ is a faithfully flat $\cO(G)$-module.
+
+This establishes that $T$ is co-monadic, and then the first claim follows from the crude co-monadicity theorem. \pk{verify that we have the necessary conditions to pull out $o_q(G)$ here?}
+
+%Old proof: We notice that \pk{the DK product of abelian categories is abelian} so $\Rep_q(G) \bt \Rep_q(G)$ is abelian, and then if either \pk{colimit of abelians is abelian} or \pk{modules internal to abelian is abelian} we can say that the source $\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ is abelian. To see that $T$ is conservative, we can use that the composition of conservative functors is conservative. By \cite[Lemma 4.3]{ben-zviIntegratingQuantumGroups2018}, it is easy to see that $\ot$ is conservative, since $A \ot B \cong 0$ implies one of $A$ or $B$ is zero. Similarly, the forgetful functor is conservative: if an $\cO(G)$-module is nonzero, then it cannot be zero as an object in the background category. So the functors making up $T$ are conservative, so $T$ is conservative.
+
+%Since $\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G)))$ is abelian, it has all kernels, and hence all equalizers. In particular it has equalizers of coreflective pairs. It remains to show that $T$ preserves them. Again it suffices to show that tensor product and forgetful functors preserve them. We note that, WLOG, we can consider morphisms $W \bt W \to X \bt Y$ if the form $f \bt g$ for $f : V \to X, g : W \to Y$. Then the kernel is clearly $\Ker(f) \bt \Ker(g)$, from which it is clear that $\ot$ preserves hernels and hence all equalizers. Similarly it seem s\pk{clear?} that the forgetful functor preserves kernels, hence all equalizers.
+
+%This establishes that $T$ satisfies the conditions of crude co-monadicity, so the first equivalence is proven.
+
+For the second equivalence, we recall an equivalence
+\begin{equation}
+\label{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}
+Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM)
+\end{equation}
+where $\cM$ is a $\cC$-module category and $A \in \cC$ an algebra object. This is shown in the $\infty$-categorical setting in \cite{lurieHigherAlgebra}. \pk{Where!?}
+
+We then combine Cor. \ref{cl-Rep_q-is-O_q-mod-in-O-mod} and equation (\ref{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}), to see that
+\begin{align*}
+Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(&\Rep_q(G), \Rep_q(G))\\ &\simeq Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(\cO_q(G)-mod(\Rep_q(G) \bt_{\Rep_G} \Rep_q(G)), \Rep_q(G))\\ &\simeq o_q(G)-mod(\Rep_q(G)).
+\end{align*}
+\end{proof}
 
 There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$. Under such a pairing, the factorizability map becomes
 \[
 o_q(G)-comod(\Rep_q(G)) \xrightarrow{\Omega} o_q(G)-mod(\Rep_q(G))
 \]
-which is an equivalence if and only if $\Omega$ is nondegenerate. Therefore, relatie factorizability is established if we can show the following.
+which is an equivalence if and only if $\Omega$ is nondegenerate. Therefore, relative factorizability is established if we can show the following.
 
 \begin{prop}
 \label{p-Omega-nondegenerate}
@@ -124,7 +328,7 @@ Recall that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is given by the colimit of the d
 Now, the following theorem is implicit in Lurie's Higher Algebra but is recounted in an accessible form by Gaitsgory.
 
 \begin{thm}[{\cite[Cor. C.2.3]{gaitsgorySheavesCategoriesNotion2015}}]
-Let $\cA$ be a monoidal category acting on $\cC$ on the right and on $\cD$ on the left. If either: the two action functors and the monoidal product admit continuous right adjoints, and the right adjoint to the monoidal product is a map of $\cA$-module categories; or the two action functors and the monoidal product admit left adjoints, and the left adjoint to the monoidal product is a map of $\cA$-module categories; then the map
+Let $\cA$ be a monoidal category acting on $\cC$ on the right and on $\cD$ on the left. If either: the two action functors and the monoidal product admit \pk{co}continuous right adjoints, and the right adjoint to the monoidal product is a map of $\cA$-module categories; or the two action functors and the monoidal product admit left adjoints, and the left adjoint to the monoidal product is a map of $\cA$-module categories; then the map
 \[
 \cC \bt \cD \to \cC \bt_\cA \cD
 \]
@@ -136,24 +340,76 @@ admits a right adjoint and the adjunction is monadic, with the monad isomorphic 
 
 Then if we can verify the conditions of this theorem, this will give a monadic description of the relative tensor product.
 
-By \cite[Definition-Proposition 4.1]{brochierDualizabilityBraidedTensor2018}, if $\Rep(G)$ is cp-rigid then its multiplication admits a cocontinuous right adjoint, e.g. an adjoint in $\Pr$. To be cp-rigid means all compact projectives are left and right dualizable. Projective means the existence of a ``dual basis", does being compact imply this is finite? Then any category $R$-mod is cp-rigid...
+By \cite[Definition-Proposition 4.1]{brochierDualizabilityBraidedTensor2018}, if $\Rep(G)$ is cp-rigid then its multiplication admits a cocontinuous right adjoint, e.g. an adjoint in $\Pr$. To be cp-rigid means : having all small colimits; being generated under small colimits by a small subcategory of compact-projective objects; all (or a generating collection) of the cp objects are left and right dualizable.
 
-\pk{How to show this right adjoint is continuous?}
+We recall that $\Rep(G)$ has all small products, and being a category of modules it is abelian so has all cokernels (hence all coequalizers). So $\Rep(G)$ has all small colimits.
+
+A compact-projective is an object $c$ which is compact ($\Hom(c, -)$ preserves filtered colimits) and projective ($\Hom(c, -)$ preserves, equivalently, cokernels/pushouts/finite colimits, i.e. is right exact). Equivalently, $\Hom(c, -)$ preserves small colimits. Recalling the definition of abelian category that includes any epimorphism being the cokernel of its kernel, we see that having enough compact-projectives is equivalent to every object having a cp cover.
+
+We know that, for any category of modules, free modules give projective covers (hence enough projectives). \pk{Idea: we need to take $\Rep(G)$ to be f.d. or f.g. modules, then f.d/f.g free modules should be compact (?) so the category will have enough cp objects}.
+
+If the above idea works, then it should also take care of rigidity, since being a finite-dimensional module should be enough for dualizability. This will establish that $\Rep(G)$ is cp-rigid. \pk{So this works for f.d. modules over any ring?}
 
 %The monoidal multiplication of $\Rep(G)$ has a right adjoint $X \mapsto X \bt X$ (universal property of tensor products of representations).
 
-We would like to show that the map
+Then we consider the action maps.
 
+\begin{prop}
+\label{p-action-adjoint}
+The map
 \begin{align*}
 \mathrm{act}_{\Rep_q(G)} : \Rep_q(G) \bt \Rep(G) &\to \Rep_q(G)\\
-V \bt W &\mapsto V \ot Fr^*(W)
+V \bt W &\mapsto V \ot \Fr^*(W)
 \end{align*}
 
 has a right adjoint, given by
 \[
 \mathrm{act}^R(Y) = \int^{X \in \Rep^{\mathrm{fd}}(G)}(Y \ot Fr^*(X^\vee)) \boxtimes X.
 \]
-The proof is analogous to Section 1.2 of \cite{kalmykovCategoricalApproachDynamical2020} \pk{The key is to understand Prop. 1.5}. Since it's a coend, the right adjoint preserves colimits so exists in $\Pr$. \pk{what about continuity?}
+\end{prop}
+
+\begin{proof}
+The proof is analogous to Proposition 1.8 of \cite{kalmykovCategoricalApproachDynamical2020}. Recall the following.
+
+\begin{prop}[{\cite[Prop 1.5]{kalmykovCategoricalApproachDynamical2020}}]
+If $F : \cC \to \cD$ is a cocontinuous functor of locally presentable categories, where $\cC$ has enough compact projectives, then $F$ has a right adjoint given by the coend
+\[
+F^R(x) = \int^{y \in \cC^{cp}} \Hom_{\cD}(F(y), x) \ot y.
+\]
+\end{prop}
+
+Now, since $\Rep(G)$ has enough compact projectives and the DK product distributes over colimits, we see $\Rep_q(G) \bt \Rep(G)$ also has enough compact-projectives. By the above proposition, the action functor has a right adjoint given by
+\[
+\mathrm{act}^R(Y) = \int^{X_1 \in \Rep_q(G)^{cp}, X_2 \in \Rep(G)^{fd}} \Hom(X_1 \ot \Fr^*(X_2), Y) \ot (X_1 \bt X_2).
+\]
+Here the domain of the coend is justified by \ref{cl-cp-product} and \ref{cl-cp-Rep-fd}. Now, by \ref{cl-pullback-duals}, since compact-projectives in $\Rep(G)$ are dualizable, they are dualizable on Frobenius pullback, so that we can write
+\[
+\mathrm{act}^R(Y) = \int^{X_1 \in \Rep_q(G)^{cp}, X_2 \in \Rep(G)^{fd}} \Hom(X_1, Y \ot \Fr^*(X_2)^{\vee}) \ot (X_1 \bt X_2).
+\]
+Then \cite[Prop 1.4]{kalmykovCategoricalApproachDynamical2020} gives us
+\[
+\mathrm{act}^R(Y) = \int^{X_2 \in \Rep(G)^{fd}} Y \ot \Fr^*(X_2)^{\vee} \bt X_2
+\]
+or equivalently
+\[
+\mathrm{act}^R(Y) = \int^{X_2 \in \Rep(G)^{fd}} (Y \ot \Fr^*(X_2^{\vee})) \bt X_2
+\]
+since Frobenius pullback commutes with taking duals.
+\end{proof}
+
+\begin{claim}
+\label{p-act^R-is-coco}
+The right adjoint to the action functor is cocontinuous.
+\end{claim}
+
+\begin{proof}
+By Prop \ref{p-action-adjoint}, $act^R$ is made up of a coend (a colimit!), over objects in the Deligne-Kelly product of categories, involving the action of $\Rep(G)$. As we work internal to $\Pr$, the action is cocontinuous. Then as the DK product distributes over colimits, we see that $act^R$ must be a colimit-preserving functor.
+\end{proof}
+
+In a smilar way we can show that the left action of $\Rep(G)$ on $\Rep_q(G)$ has a cocontinuous right adjoint given by
+\[
+\mathrm{act}^R(Y) = \int^{X \in \Rep(G)^{fd}} X \bt (\Fr^*(X^{\vee}) \ot Y).
+\]
 
 %This should be something like the map
 %\[
@@ -165,11 +421,31 @@ The proof is analogous to Section 1.2 of \cite{kalmykovCategoricalApproachDynami
 %\]
 %where $u_q(G) \subseteq \Ures_q$ is the small quantum group and we expect there is an adjunction $(Fr^* \dashv -^{u_q(G)})$ or $(Fr^* \dashv -/-^{u_q(G)})$. If this is the case, then as we claim the right action has a right adjoint (and similarly, so does the left action).
 
-Supposing we have dealt with this, we then have that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is equivalent to algebras for the monad
-\[
+Bringing all of this together, we then have that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is equivalent to algebras for the monad
+\begin{equation}
+\label{eq-monad}
 (\mathrm{act}_\cC \ot \Id) \circ (\Id \ot \mathrm{act}_\cD)^R.
-\]
+\end{equation}
 on $\Rep_q(G) \bt \Rep_q(G)$.
+
+Now, let us consider the algebras for this monad.
+
+Pavel:
+
+``You can also prove using formula that [the right adjoint to act] preserves the Rep(G)-action strictly.
+
+
+Regarding the question about monads, you have the following. $act^R$ in fact also preserves the left $Rep_q(G)$-action (strictly). If you work it out, you will see that the resulting monad T on $Rep_q(G) \otimes Rep_q(G)$ is colimit-preserving and commutes with the $Rep_q(G)$-actions on each factor. Such endofunctors M are specified by their value T(1) on the unit: using the fact that the endofunctor commutes with the $Rep_q(G)$-actions you get $T(V\boxtimes W) = (V\boxtimes 1)\otimes T(1)\otimes (1\boxtimes W)$. The monad structure on T corresponds to an algebra structure on T(1)."
+
+Having understood this, then using (\ref{eq-monad}) we see that the category of algebras for this monad is equivalent to algebras for the algebra
+\begin{align*}
+(\mathrm{act}_\cC \ot \Id) \circ (\Id \ot \mathrm{act}_\cD)^R(\One \bt \One) &= (\mathrm{act}_\cC \ot \Id) (\One \bt \int^{X \in \Rep(G)^{fd}} X \bt \Fr^*(X^{\vee}))\\
+&= \int^{X \in \Rep(G)^{fd}} (\mathrm{act}_\cC \ot \Id) (\One \bt X \bt \Fr^*(X^{\vee}))\\
+&= \int^{X \in \Rep(G)^{fd}} \Fr^*(X) \bt \Fr^*(X^{\vee})\\
+&= \Fr^* (\int^{X \in \Rep(G)^{fd}} X \bt X^{\vee} )\\
+\end{align*}
+
+which by the Peter-Weyl theorem is none other than the algebra of functions $\cO(G)$ regarded as an algebra in $\Rep_q(G) \bt \Rep_q(G)$ \pk{?}
 
 \section{Relative cofactorizability}
 We echo the argument of \cite{brochierInvertibleBraidedTensor2020} that cofactorizability is equivalent to factorizability. Recall the functor
@@ -203,7 +479,7 @@ $T$ has a left adjoint which is a functor of $\cC \bt \cC$-module categories if 
 \end{prop}
 
 \begin{proof}
-The idea is that, $(T^{\vee})^R = (T^L)^{\vee}$. \pk{A bit muddled on this!}
+The idea is that, $   (T^{\vee})^R = (T^L)^{\vee}$. \pk{A bit muddled on this!}
 \end{proof}
 
 We \pk{claim} that in our case $T$ has a left adjoint, so $\tens$ has a right adjoint, and we define $E = \tens^R(\One)$.
@@ -213,21 +489,23 @@ We can also argue the following.
 \begin{prop}
 There is an equivalence
 \[
-HC_{\cA}(\cC) \simeq F-mod(\cC).
+HC_{\cA}(\cC) \simeq \cO_q(G)-mod(\cC).
 \]
 \end{prop}
 
 \begin{proof}
-Let $T : \Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ the tensor product functor. \pk{Recall} that $\Rep_q(G) \simeq T^R(\One)-mod(\Rep_q(G) \bt \Rep_q(G))$. Now, it is a \pk{fact} that
+Let $T : \Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ the tensor product functor. We \pk{claim - from cp-rigidity?} that this has a right adjoint $T^R$ and that the adjunction $T \dashv T^R$ is monadic, so that $\Rep_q(G) \simeq T^RT(\One)-mod(\Rep_q(G) \bt \Rep_q(G))$. Moreover, we \pk{claim} that $T^RT(\One) \simeq \cO_q(G) \in \Rep_q(G) \bt \Rep_q(G)$.
+
+The quantum Frobenius map $\Fr : \Ures_q(G) \to U(G)$ induces a map $\Fr^* : \cO(G) \to \cO_q(G)$ of bialgebras, which in turn allows us to regard any $\cO_q(G)$-module as an $\cO(G)$-module by pulling back.
+
+Now, it is a \pk{general fact} that
 \[
 A-mod(\cC) \bt_\cC \cM \simeq A-mod(\cM)
 \]
-(\pk{what conditions here?}) where $\cM$ is a $\cC$-module category. Here, we would like to take $\cC = \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-\mod(\Rep_q(G) \bt \Rep_q(G))$, $\cM \simeq \Rep_q(G)$, and somehow we'd like $A-mod(\cC) \simeq \Rep_q(G)$. Then the displayed identity will give $HC_{\Rep(G)}(\Rep_q(G)) \simeq A-mod(\Rep_q(G))$.
+(\pk{what conditions here?}) where $\cM$ is a $\cC$-module category. Here, we let $\cC = \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-\mod(\Rep_q(G) \bt \Rep_q(G))$ (using Prop. \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}), $\cM \simeq \Rep_q(G)$. Since $\cO_q(G)$-modules can be regarded as $\cO(G)$-modules, we have $\cO_q(G) \in \cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ and $\cO_q(G)-mod(\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))) \simeq \cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G)) \simeq \Rep_q(G)$. Then taking $A = \cO_q(G)$, the left-hand-side above becomes $\Rep_q(G) \bt_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)} \Rep_q(G) = HC_{\Rep(G)}(\Rep_q(G))$, and we see that this is equivalent to $\cO_q(G)-mod(\Rep_q(G))$.
 \end{proof}
 
-This is related to Prop \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
-
-Now, there exists a map $Dr: F \to E$ which should be related to $\Omega$ by tensor-hom. Under the above identifications, the relative cofactorizability becomes
+Now, there exists a map $Dr: F \to E$ which should be related to $\Omega$ by tensor-hom \pk{How does this duality work? $o_q(G)$ is defined by a map out of the RELATIVE tensor prod}. Under the above identifications, the relative cofactorizability becomes
 \begin{align*}
 F-mod(\cC) &\to E-mod(\cC)\\
 M &\mapsto M \ot_F E
@@ -235,6 +513,101 @@ M &\mapsto M \ot_F E
 along $Dr$. But this is an equivalence if and only if $Dr$ is an isomorphism, if and only if $\Omega$ is non-degenerate, which it is by Proposition \ref{p-Omega-nondegenerate}.
 
 Then this establishes relative cofactorizability.
+
+\appendix
+\section{Appendix}
+
+In this appendix we collect some straightforward results that are used in our proofs.
+
+\subsection{Compact-projectives}
+
+\begin{claim}
+\label{cl-compact-fp}
+In the category $R$-mod, compact objects are precisely the finitely presented modules.
+\end{claim}
+
+\begin{proof}
+See \url{https://math.stackexchange.com/questions/111472/reference-request-compact-objects-in-r-mod-are-precisely-the-finitely-presented}.
+\end{proof}
+
+\begin{claim}
+\label{cl-projective-dual-basis}
+In the category $R$-mod, an object $M$ is projective if and only if it has a ``dual basis" - a set $\{m_i\}$ and coresponding $\{f_i\} \subseteq \Hom(M, R)$ such that $f_i(m) = 0$ for all but finitely many $i$ and for all $m$, $\sum_i f_i(m)m_i = m$.
+\end{claim}
+
+\begin{proof}
+See \cite[Lemma I.1.3]{demeyerSeparableAlgebrasCommutative1971}
+\end{proof}
+
+\begin{claim}
+\label{cl-cp-product}
+Let $\cC$ and $\cC$ be $k$-linear categories. Denote by $\cC^{cp}$ etc the subcategory of compact-projective objects. Then there is an equivalence $\cC^{cp} \bt \cD^{cp} \simeq (\cC \bt \cD)^{cp}$.
+\end{claim}
+
+\begin{proof}
+First let $c \in \cC^{cp}, d \in \cD^{cp}$. Then consider a small colimit, $\colim_{j \in J} c_j \bt d_j$ in $\cC \bt \cD$, which we will implicitly treat as a product of two colimits (this is possible since the DK product distributes over colimits). Then we have
+\begin{align*}
+\Hom(c \bt d, \colim_J c_j \bt d_j) &= \Hom(c \bt d, \colim c_j \bt \colim d_j)\\
+                      &= \Hom(c, \colim c_j) \ot \Hom(d, \colim d_j)\\
+                      &= \colim(\Hom(c, c_j)) \ot  \colim(\Hom(d, d_j))\\
+                      &= \colim(\Hom(c, c_j) \ot \Hom(d, d_j))\\
+                      &= \colim \Hom(c \bt d, c_j \bt d_j)
+\end{align*}
+where in the first equality we treat the colimit as a product of two colimits, in the second and last we use the definition of $\Hom$-spaces in the DK tensor product, in the third we use compact-projectivity of $c, d$, and in the fourth we use that $\ot$ distributes over colimits in categories of modules.
+
+Now let $c \bt d \in (\cC \bt \cD)^{cp}$. Let us show $c \in \cC^{cp}$ (the case of $d$ will be symmetric). Let $\colim_J c_j$ a small colimit in $\cC$. Then we have
+\[
+\Hom(c \bt d, \colim(c_j) \bt d) = \Hom(c \bt d, \colim(c_j \bt d)) = \colim \Hom(c \bt d, c_j \bt d).
+\]
+Then by the definition of the DK product, the leftmost term is written as $\Hom(c, \colim c_j) \ot \Hom(d, d)$ and the rightmost term is $\colim(\Hom(c, c_j) \ot \Hom(d, d)) = \colim(\Hom(c, c_j)) \ot \Hom(d, d)$.
+
+Whenever we have an isomorphism $ \theta : V \ot W \xrightarrow{\simeq} V' \ot W$, then by the universal property of $\ot$ this corresponds to a bilinear map $\Tilde{\theta} : V \times W \to V' \times W$ which will have a bilinear inverse. But applying $\Tilde{\theta}$ to $V \times \{ 0 \}$ will give a linear isomorphism $V \cong V'$.
+
+Then by the above paragraph, it follows that $\Hom(c, \colim c_j) \cong \colim(\Hom(c, c_j))$, so that $c$ is compact-projective.
+\end{proof}
+
+\begin{claim}
+\label{cl-cp-Rep-fd}
+The compact-projective objects of $\Rep(G)$ are simply the finite-dimensional representations.
+\end{claim}
+
+\begin{proof}
+\pk{?}
+\end{proof}
+
+\begin{claim}
+\label{cl-pullback-duals}
+If $V \in \Rep(G)$ is dualizable, then $\Fr^*(V) \in \Rep_q(G)$ is and $\Fr^*(V)^{\vee} = \Fr^*(V^{\vee})$.
+\end{claim}
+
+\begin{proof}
+\pk{?}
+\end{proof}
+
+\subsection{Comodules and modules}
+
+We would like to say that a functor $RCoMod_A(\cC) \to RMod_A(\cC)$, which preserves the fogetful functors to $\cC$, is equivalent to the data of a pairing $\Omega : A \ot A \to \One$. Here is a sketch of how this might work.
+
+First, let $A \in \cC$ a bialgebra object. We note that there is a canonical comodule structure on $\One$ given by
+\[
+\One \xrightarrow{\lambda} \One \ot \One \xrightarrow{1 \ot \eta} \One \ot A
+\]
+which can be verified by a diagram chase. Let us \pk{suppose} that $A$ has elements and $\One = k$ is a base field. Then in fact, there is an $A$-indexed family of comodules $\One_a$ given as above, but replacing $\eta$ with the map sending $1 \mapsto a \in A$. \pk{Is this right??}
+
+Now any pairing $\Omega$ induces a functor $F_{\Omega} : RCoMod_A(\cC) \to RMod_A(\cC)$ by giving $V \in RCoMod_A(\cC)$ the following module structure:
+\[
+V \ot A \xrightarrow{\Delta_V} V \ot A \ot A \xrightarrow{1 \ot \Omega} V \ot \One \cong V.
+\]
+
+Conversely, from any functor $F : LCoMod_A(\cC) \to RMod_A(\cC)$ which preserves the fiber functor to $\cC$ (i.e. fixes the underlying object), we can produce a pairing as follows: $F$ will produce a module structure on the comodule $\One_a$, and the map
+\[
+\One_a \ot A \to \One_a \to \One_a \ot A
+\]
+will send $1 \ot b \in \One_a \ot A$ to an element $\lambda_{a, b}a$. We define $\Omega_F(b, a) = \lambda_{a, b}$.
+
+It is easy to check that the functor $F_{\Omega}$ recovers the pairing $\Omega$. Conversely, given $\Omega_F$, \pk{How to show it recovers F!?}.
+
+
 
 \printbibliography
 
