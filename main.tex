@@ -301,11 +301,18 @@ Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(&\Rep_q(G), \Rep_q(G))\\ &\simeq Fun_{\Rep_q 
 \end{align*}
 \end{proof}
 
-There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$. Under such a pairing, the factorizability map becomes
+There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$.
+
+\begin{prop}
+\label{p-factorizability-as-Omega}
+Under the equivalences of Prop. \ref{p-factorizability-equivs}, the factorizability map becomes
 \[
 o_q(G)-comod(\Rep_q(G)) \xrightarrow{\Omega} o_q(G)-mod(\Rep_q(G))
 \]
-which is an equivalence if and only if $\Omega$ is nondegenerate. Therefore, relative factorizability is established if we can show the following.
+which is an equivalence if and only if $\Omega$ is nondegenerate.
+\end{prop}
+
+We delay the proof of this a little, and first show nondegeneracy of $\Omega$. We refer the reader to Appendix \ref{app-comod-mod-pairings} for details on how pairings are associated to functors.
 
 \begin{prop}
 \label{p-Omega-nondegenerate}
@@ -316,6 +323,55 @@ The pairing $\Omega : o_q(G) \ot o_q(G) \to \One$ is nondegenerate.
 We notice that, under the forgetful functor $\Rep_q(G) \to \Rep u_q(G)$ induced by $u_q(G) \hookrightarrow \Ures_q(G)$, we have $o_q(G)$ is the canonical coend of \cite{brochierInvertibleBraidedTensor2020} \pk{why?}. Then, for $q$ \pk{sufficiently nice}, $\Rep u_q(G)$ is an invertible finite tensor category \cite[Rmk. 3.12]{brochierInvertibleBraidedTensor2020} hence the pairing $\Omega$ is non-degenrate by \cite[Thm. 3.20]{brochierInvertibleBraidedTensor2020}.
 \end{proof}
 Therefore, the relative factorizability conditions hold.
+
+Now let's sketch the proof of Proposition \ref{p-factorizability-as-Omega}.
+
+We want to understand what happens to the canonical comodule structure on $o_q(G)$, under the functor
+\[
+o_q(G)-comod(\Rep_q(G)) \xrightarrow{\sim} \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \xrightarrow{} \End_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)}(\Rep_q(G)) \xrightarrow{\sim} o_q(G)-mod(\Rep_q(G)).
+\]
+
+Let us consider the first of these arrows, which arises from the co-monadicity theorem. We recall that $o_q(G)-comod(\Rep_q(G))$ is understood as the category of coalgebras for the comonad $TT^R$. Denote this comonad by $\mathbf{T}$, and its category of coalgebras by $\Rep_q(G)_{\mathbf{T}}$. The comonadicity theorem asserts that the comparison functor
+\begin{align*}
+K : \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) &\to \Rep_q(G)_{\mathbf{T}}\\
+A &\mapsto (T(A) \xrightarrow{F\eta} TT^RT(A))
+\end{align*}
+is an equivalence. Now, the right adjoint to the comparison functor is given on objects $A \xrightarrow{\alpha} TT^R(A)$ by the equalizer of the diagram
+%https://q.uiver.app/?q=WzAsMixbMCwwLCJcXGJ1bGxldCJdLFsyLDAsIlxcYnVsbGV0Il0sWzAsMSwiIiwwLHsib2Zmc2V0IjoxfV0sWzAsMSwiIiwyLHsib2Zmc2V0IjotMX1dXQ==
+\[\begin{tikzcd}
+ T^R(A) && T^RTT^R(A)
+ \arrow["T^R\alpha"',shift right=1, from=1-1, to=1-3]
+ \arrow["\eta_{T^R(A)}", shift left=1, from=1-1, to=1-3]
+\end{tikzcd}\]
+see \cite[Lemma 5.10]{johnstoneCategoryTheoryLecture2019}.
+
+Now, consider the object $o_q(G) \in \Rep_q(G)$. According to \cite{kalmykovCategoricalApproachDynamical2020}, we should have
+\[
+T^R(o_q(G)) = \inf^{x \in c.p.} (o_q(G) \ot x^{\vee}) \bt x = \int^{x, y \in c.p.} (y^{\vee} \ot y \ot x^{\vee}) \bt x
+\]
+Now, the bottom arrow of the equalizer is the coproduct on $o_q(G)$, given by Figure 1 of \cite{brochierInvertibleBraidedTensor2020}:
+\[
+\int^{x, y \in c.p.} (y^{\vee} \ot y \ot x^{\vee}) \bt x  \to \int^{x, y \in c.p.} (y^{\vee} \ot y \ot y^{\vee} \ot y \ot x^{\vee}) \bt x .
+\]
+The top arrow is the map
+\[
+\int^{x, y \in c.p.} (y^{\vee} \ot y \ot x^{\vee}) \bt x \to \int^{x, y, z \in c.p.} (y^{\vee} \ot y \ot x^{\vee} \ot x \ot z^{\vee}) \bt z
+\]
+using coevaluation on the right. Now, it seems that, comparing the pictures here, we'd like the equalizer to be
+\[
+\int^{x \in c.p., y \in Z_2(\Rep_q(G))} (y^{\vee} \ot y \ot x^{\vee}) \bt x
+\]
+for instance...
+
+Then let us consider the last arrow, that is,
+\[
+\End_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)}(\Rep_q(G)) \xrightarrow{\sim} o_q(G)-mod(\Rep_q(G))
+\]
+given using
+\[
+Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM).
+\]
+We'd like to understand the module structure obtained.
 
 Below we sketch the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
 
@@ -585,6 +641,167 @@ If $V \in \Rep(G)$ is dualizable, then $\Fr^*(V) \in \Rep_q(G)$ is and $\Fr^*(V)
 \end{proof}
 
 \subsection{Comodules and modules}
+\label{app-comod-mod-pairings}
+
+Let $\cC$ be a monoidal category, and $A$ a bialgebra object. Let $\Omega : A \ot A \to \One$ be a Hopf pairing, that is, a pairing such that the following diagrams commute.
+% https://q.uiver.app/?q=WzAsNSxbMCwwLCJBIFxcb3QgQSBcXG90IEEiXSxbNCwwLCJBIFxcb3QgQSJdLFswLDIsIkEgXFxvdCBBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFs0LDIsIkEiXSxbMCwxLCJcXG5hYmxhIFxcb3QgMSJdLFswLDIsIjEgXFxvdCAxIFxcb3QgXFxEZWx0YSIsMl0sWzIsMywiMSBcXG90IFxcT21lZ2EgXFxvdCAxIiwyXSxbMyw0LCJcXE9tZWdhIiwyXSxbMSw0LCJcXE9tZWdhIl1d
+\[\begin{tikzcd}
+	{A \ot A \ot A} &&&& {A \ot A} \\
+	\\
+	{A \ot A \ot A \ot A} && {A \ot A} && A
+	\arrow["{\nabla \ot 1}", from=1-1, to=1-5]
+	\arrow["{1 \ot 1 \ot \Delta}"', from=1-1, to=3-1]
+	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
+	\arrow["\Omega"', from=3-3, to=3-5]
+	\arrow["\Omega", from=1-5, to=3-5]
+\end{tikzcd}\]
+
+% https://q.uiver.app/?q=WzAsNSxbMCwwLCJBIFxcb3QgQSBcXG90IEEiXSxbNCwwLCJBIFxcb3QgQSJdLFswLDIsIkEgXFxvdCBBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFs0LDIsIkEiXSxbMCwxLCJcXG5hYmxhIFxcb3QgMSJdLFswLDIsIjEgXFxvdCAxIFxcb3QgXFxEZWx0YSIsMl0sWzIsMywiMSBcXG90IFxcT21lZ2EgXFxvdCAxIiwyXSxbMyw0LCJcXE9tZWdhIiwyXSxbMSw0LCJcXE9tZWdhIl1d
+\[\begin{tikzcd}
+	{A \ot A \ot A} &&&& {A \ot A} \\
+	\\
+	{A \ot A \ot A \ot A} && {A \ot A} && A
+	\arrow["{1 \ot \nabla}", from=1-1, to=1-5]
+	\arrow["{\Delta \ot 1 \ot 1}"', from=1-1, to=3-1]
+	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
+	\arrow["\Omega"', from=3-3, to=3-5]
+	\arrow["\Omega", from=1-5, to=3-5]
+\end{tikzcd}\]
+
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzIsMCwiQSBcXG90IEEiXSxbMiwyLCJBIl0sWzAsMiwiQSBcXG90IEEiXSxbMCwxLCJcXGV0YSBcXG90IDEiXSxbMSwyLCJcXE9tZWdhIl0sWzAsMywiMSBcXG90IFxcZXRhIiwyXSxbMywyLCJcXE9tZWdhIiwyXSxbMCwyLCJcXGVwc2lsb24iLDJdXQ==
+\[\begin{tikzcd}
+	A && {A \ot A} \\
+	\\
+	{A \ot A} && A
+	\arrow["{\eta \ot 1}", from=1-1, to=1-3]
+	\arrow["\Omega", from=1-3, to=3-3]
+	\arrow["{1 \ot \eta}"', from=1-1, to=3-1]
+	\arrow["\Omega"', from=3-1, to=3-3]
+	\arrow["\epsilon"', from=1-1, to=3-3]
+\end{tikzcd}\]
+
+Such a pairing allows us to give a functor $RCoMod_A(\cC) \to RMod_A(\cC)$, which commutes with the fiber functor to $\cC$, endowing $(V, \Delta_V) \in RCoMod_A(\cC)$ with the module structure
+\[
+V \ot A \xrightarrow{\Delta_V \ot 1} V \ot A \ot A \xrightarrow{1 \ot \Omega} V \ot \One \cong V.
+\]
+\pk{check that this is a module! should follow from Hopf pairing axioms}.
+
+Notice that this functor commutes with the fiber functor to $\cC$ and preserves free objects.
+
+Conversely, given a functor $F : RCoMod_A(\cC) \to RMod_A(\cC)$ which commutes with the fiber functor to $\cC$, we obtain a pairing $\Omega$ on $A$. The functor $F$ yeilds a module structure $\nabla_F : A \ot A \to A$ from the canonical comodule structure on $A$. Then we take
+\[
+A \ot A \xrightarrow{\nabla_F} A \xrightarrow{\epsilon} \One
+\]
+as the pairing $\Omega$.
+
+We claim these two constructions are inverse to one another, giving a correspondence between pairings and fiber-preserving fucntors $RCoMod_A(\cC) \to RMod_A(\cC)$.
+
+Given a pairing $\Omega$, we produce its associated functor $F$, and then the pairing associated to this functor, which is
+\[
+A \ot A \xrightarrow{\Delta \ot 1} A \ot A \ot A \xrightarrow{1 \ot \Omega} A \xrightarrow{\epsilon} \One
+\]
+or, in Sweedler's notation, sends
+\[
+a \ot b \mapsto a_{(1)} \ot a_{(2)} \ot b \mapsto a_{(1)}\Omega(a_{(2)}, b) \mapsto \epsilon(a_{(1)})\Omega(a_{(2)}, b) \mapsto \Omega(\epsilon(a_{(1)})a_{(2)}, b) = \Omega(a, b).
+\]
+
+It remains to show that, given $F : RCoMod_A(\cC) \to RMod_A(\cC)$, then the functor associated to its associated pairing $\Omega_F$ is simply $F$ itself. We begin by checking this for the object $A$. Observe that the map $A \xrightarrow{\Delta} A \ot A$ is a map of right comodules by the coelagebra axioms. Then under the functor $F$, it becomes a map of right modules. Now, assuming that \pk{F preserves free objects}, this implies that the following diagram commutes:
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIFxcb3QgQSJdLFsyLDAsIkEiXSxbMCwyLCJBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFswLDEsIlxcbmFibGFfRiJdLFswLDIsIlxcRGVsdGEgXFxvdCAxIiwyXSxbMiwzLCIxIFxcb3QgXFxuYWJsYV9GIiwyXSxbMSwzLCJcXERlbHRhIl1d
+\[\begin{tikzcd}
+	{A \ot A} && A \\
+	\\
+	{A \ot A \ot A} && {A \ot A}
+	\arrow["{\nabla_F}", from=1-1, to=1-3]
+	\arrow["{\Delta \ot 1}"', from=1-1, to=3-1]
+	\arrow["{1 \ot \nabla_F}"', from=3-1, to=3-3]
+	\arrow["\Delta", from=1-3, to=3-3]
+\end{tikzcd}\]
+
+Now, notice that the functor associated to $\Omega_F$ yeilds the following module structure on $A$:
+\[
+A \ot A \xrightarrow{\Delta \ot 1} A \ot A \ot A \xrightarrow{1 \ot \nabla_F} \xrightarrow{1 \ot \epsilon} A
+\]
+but since the first two arrows are the bottom leg of the above commutative square, we have that this is
+\[
+(1 \ot \epsilon) \circ \Delta \circ \nabla_F = \nabla_F
+\]
+using the coalgebra axioms.
+
+We have therefore established a correspondence
+\begin{equation*}
+        \left\{\begin{array}{c}
+        \text{Hopf pairings}\\
+        \text{$\Omega : A \ot A \to \One$}
+        \end{array}\right\}
+        \xleftrightarrow{1:1}
+        \left\{\begin{array}{c}
+        \text{Functors $RCoMod_A(\cC) \to RMod_A(\cC)$}\\
+        \text{commuting with fiber functor}\\
+        \text{and preserving free objects.}
+        \end{array}\right\}.
+\end{equation*}
+
+Dually, one can establish a correspondence
+\begin{equation*}
+        \left\{\begin{array}{c}
+        \text{Co-Hopf co-pairings}\\
+        \text{$\mho : \One \to A \ot A$}
+        \end{array}\right\}
+        \xleftrightarrow{1:1}
+        \left\{\begin{array}{c}
+        \text{Functors $RMod_A(\cC) \to RCoMod_A(\cC)$}\\
+        \text{commuting with fiber functor}\\
+        \text{and preserving free objects.}
+        \end{array}\right\}.
+\end{equation*}
+
+We will say a Hopf pairing $\Omega$ is nondegenerate if there exists a co-Hopf co-pairing $\mho$ such that $\mho \circ \Omega = \Id_{A \ot A}$ and $\Omega \circ \mho = \Id_{\One}$. Now, it is clear that when $\Omega$ is nonegenerate, the functor $F_\Omega : RCoMod_A(\cC) \to RMod_A(\cC)$ is an equivalence.
+
+Since the functors from pairings commute with the fiber functor to $\cC$, it is clear that they are always fully faithful functors. It remains to check essential surjectivity.
+
+
+DUALLY
+
+We want to say co-pairings $\One \to A \ot A$ correspond to functors $RMod_A(\cC) \to RCoMod_A(\cC)$. Given such a functor $F$, it gives $(A, \nabla)$ a comodule structure $\Delta_F$, and induces the co-pairing
+\[
+\One \xrightarrow{\eta} A \xrightarrow{\Delta_F} A \ot A.
+\]
+This in turn gives a functor $RMod_A(\cC) \to RCoMod_A(\cC)$, which takes $(A, \nabla)$ to the comodule structure
+\[
+A \xrightarrow{1 \ot \eta} A \ot A \xrightarrow{1 \ot \Delta_F} A \ot A \ot A \xrightarrow{\nabla \ot 1} A \ot A
+\]
+sending $a \mapsto (\nabla \ot 1)(a \ot \Delta_F(1))$. If $\Delta_F$ is a map of LEFT $A$-modules, then this should suffice to show that going from a functor to its copairing to its functor is the identity.
+
+Why is $\Delta_F$ a map of LEFT $A$-modules?
+
+Recall that $A$ is a right $A$ module, and there is a canonical equivalence $\End(A_A) \cong A$. Now, since $F$ is a functor $RMod_A(\cC) \to RCoMod_A(\cC)$, then for any map $\phi : A \to A$ of $A$-modules, this must also be a map of the correspondong comodules under $F$, i.e. the diagram
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzIsMCwiQSBcXG90IEEiXSxbMCwyLCJBIl0sWzIsMiwiQSBcXG90IEEiXSxbMCwxLCJcXERlbHRhX0YiXSxbMCwyLCJcXHBoaSIsMl0sWzIsMywiXFxEZWx0YV9GIiwyXSxbMSwzLCJcXHBoaSBcXG90IDEiXV0=
+\[\begin{tikzcd}
+	A && {A \ot A} \\
+	\\
+	A && {A \ot A}
+	\arrow["{\Delta_F}", from=1-1, to=1-3]
+	\arrow["\phi"', from=1-1, to=3-1]
+	\arrow["{\Delta_F}"', from=3-1, to=3-3]
+	\arrow["{\phi \ot 1}", from=1-3, to=3-3]
+\end{tikzcd}\]
+commutes. But taking $\phi$ to be left-multiplication in $A$, which  we can do by the above isomorphism, we see that commutativity of the square says $\Delta_F$ is a map of left $A$-modules.
+
+So we see that $F$ is recovered for $A$. Now let us show that it is recovered for any module $M$.
+
+Given any map $A \xrightarrow{f} M$ of right $A$-modules, under $F$ it becomes a map of right $A$-comodules, so that
+\[\begin{tikzcd}
+	A && {A \ot A} \\
+	\\
+	M && {M \ot A}
+	\arrow["{\Delta_F}", from=1-1, to=1-3]
+	\arrow["f"', from=1-1, to=3-1]
+	\arrow["{\Delta_F}"', from=3-1, to=3-3]
+	\arrow["{f \ot 1}", from=1-3, to=3-3]
+\end{tikzcd}\]
+commutes. Then letting $f$ be the map sending $1_A \mapsto m \in M$, we have that $\Delta_F(m) = (f \ot 1)\Delta_F(1_A)$. So the comodule structure under $F$ for $M$ is determined by the comodule strucutre for $A$, and it follows that we havepreservation for amm modules.
+
+\pk{-----}
 
 We would like to say that a functor $RCoMod_A(\cC) \to RMod_A(\cC)$, which preserves the fogetful functors to $\cC$, is equivalent to the data of a pairing $\Omega : A \ot A \to \One$. Here is a sketch of how this might work.
 
