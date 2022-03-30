@@ -293,7 +293,7 @@ For the second equivalence, we recall an equivalence
 \label{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}
 Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM)
 \end{equation}
-where $\cM$ is a $\cC$-module category and $A \in \cC$ an algebra object. This is shown in the $\infty$-categorical setting in \cite{lurieHigherAlgebra}. \pk{Where!?}
+where $\cM$ is a $\cC$-module category and $A \in \cC$ an algebra object. This is shown in the $\infty$-categorical setting in \cite{lurieHigherAlgebra}. \pk{Where!?} Also see \cite[5.3, 5.7]{brochierDualizabilityBraidedTensor2018} where there are \pk{dualizability hypotheses on $\cC$}.
 
 We then combine Cor. \ref{cl-Rep_q-is-O_q-mod-in-O-mod} and equation (\ref{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}), to see that
 \begin{align*}
@@ -347,7 +347,7 @@ see \cite[Lemma 5.10]{johnstoneCategoryTheoryLecture2019}.
 
 Now, consider the object $o_q(G) \in \Rep_q(G)$. According to \cite{kalmykovCategoricalApproachDynamical2020}, we should have
 \[
-T^R(o_q(G)) = \inf^{x \in c.p.} (o_q(G) \ot x^{\vee}) \bt x = \int^{x, y \in c.p.} (y^{\vee} \ot y \ot x^{\vee}) \bt x
+T^R(o_q(G)) = \int^{x \in c.p.} (o_q(G) \ot x^{\vee}) \bt x = \int^{x, y \in c.p.} (y^{\vee} \ot y \ot x^{\vee}) \bt x
 \]
 Now, the bottom arrow of the equalizer is the coproduct on $o_q(G)$, given by Figure 1 of \cite{brochierInvertibleBraidedTensor2020}:
 \[
@@ -372,6 +372,16 @@ given using
 Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM).
 \]
 We'd like to understand the module structure obtained.
+
+\pk{THE PROBLEM}
+
+In Appendix \ref{app-comod-mod-pairings}, we're thinking about functors $RCoMod_A(\cC) \to RMod_A(\cC)$. But here, we actually have $RMod_B(\cC)$ where $B \in \cA$ and $\cA$ is a monoiudal category acting on $\cC$. Then it's unclear how to make the proof work, since we'd be trying to produce a pairing on something like $A \ot B \to A$, but one tensorand of the source is in a different category to the other...
+
+We do have a functor $T : \cA \to \cC$, with $T(B) = A$, and also posessing a right adjoint $T^R$. But it isn't a tensor functor...
+
+We could try to unpack/be precise about the LHS too, though I actually think this will not solve the problem...
+
+--------
 
 Below we sketch the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
 
@@ -648,7 +658,7 @@ Let $\cC$ be a monoidal category, and $A$ a bialgebra object. Let $\Omega : A \o
 \[\begin{tikzcd}
 	{A \ot A \ot A} &&&& {A \ot A} \\
 	\\
-	{A \ot A \ot A \ot A} && {A \ot A} && A
+	{A \ot A \ot A \ot A} && {A \ot A} && \One
 	\arrow["{\nabla \ot 1}", from=1-1, to=1-5]
 	\arrow["{1 \ot 1 \ot \Delta}"', from=1-1, to=3-1]
 	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
@@ -660,7 +670,7 @@ Let $\cC$ be a monoidal category, and $A$ a bialgebra object. Let $\Omega : A \o
 \[\begin{tikzcd}
 	{A \ot A \ot A} &&&& {A \ot A} \\
 	\\
-	{A \ot A \ot A \ot A} && {A \ot A} && A
+	{A \ot A \ot A \ot A} && {A \ot A} && \One
 	\arrow["{1 \ot \nabla}", from=1-1, to=1-5]
 	\arrow["{\Delta \ot 1 \ot 1}"', from=1-1, to=3-1]
 	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
@@ -672,7 +682,7 @@ Let $\cC$ be a monoidal category, and $A$ a bialgebra object. Let $\Omega : A \o
 \[\begin{tikzcd}
 	A && {A \ot A} \\
 	\\
-	{A \ot A} && A
+	{A \ot A} && \One
 	\arrow["{\eta \ot 1}", from=1-1, to=1-3]
 	\arrow["\Omega", from=1-3, to=3-3]
 	\arrow["{1 \ot \eta}"', from=1-1, to=3-1]
@@ -700,10 +710,16 @@ Given a pairing $\Omega$, we produce its associated functor $F$, and then the pa
 \[
 A \ot A \xrightarrow{\Delta \ot 1} A \ot A \ot A \xrightarrow{1 \ot \Omega} A \xrightarrow{\epsilon} \One
 \]
-or, in Sweedler's notation, sends
+or,
 \[
-a \ot b \mapsto a_{(1)} \ot a_{(2)} \ot b \mapsto a_{(1)}\Omega(a_{(2)}, b) \mapsto \epsilon(a_{(1)})\Omega(a_{(2)}, b) \mapsto \Omega(\epsilon(a_{(1)})a_{(2)}, b) = \Omega(a, b).
+\epsilon \circ (1 \ot \Omega) \circ (\Delta \circ 1) = \Omega \circ (\epsilon \ot 1 \ot 1) \circ (\Delta \circ 1) = \Omega
 \]
+where the first equality uses that we are working in a \pk{tensor category} and the last uses the counitality axiom.
+
+%in Sweedler's notation, sends
+%\[
+%a \ot b \mapsto a_{(1)} \ot a_{(2)} \ot b \mapsto a_{(1)}\Omega(a_{(2)}, b) \mapsto \epsilon(a_{(1)})\Omega(a_{(2)}, b) \mapsto \Omega(\epsilon(a_{(1)})a_{(2)}, b) = \Omega(a, b).
+%\]
 
 It remains to show that, given $F : RCoMod_A(\cC) \to RMod_A(\cC)$, then the functor associated to its associated pairing $\Omega_F$ is simply $F$ itself. We begin by checking this for the object $A$. Observe that the map $A \xrightarrow{\Delta} A \ot A$ is a map of right comodules by the coelagebra axioms. Then under the functor $F$, it becomes a map of right modules. Now, assuming that \pk{F preserves free objects}, this implies that the following diagram commutes:
 % https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIFxcb3QgQSJdLFsyLDAsIkEiXSxbMCwyLCJBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFswLDEsIlxcbmFibGFfRiJdLFswLDIsIlxcRGVsdGEgXFxvdCAxIiwyXSxbMiwzLCIxIFxcb3QgXFxuYWJsYV9GIiwyXSxbMSwzLCJcXERlbHRhIl1d
