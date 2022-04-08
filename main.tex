@@ -143,7 +143,48 @@ This establishes relative non-degeneracy.
 
 %We therefore need to be able to compute expressions such as $\Rep_q(G)^{\sigma \op} \bt_{\Rep(G)} \Rep_q(G)$.
 
-We begin with the following computation of $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$.
+We will begin by computing $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$. This requires the following lemma, which follow from the proof of \cite[Thm. 4.6]{ben-zviIntegratingQuantumGroups2018}.
+
+\begin{lemma}
+\label{l-rep_(q)-as-module-cats}
+There is an equivalence of $\Rep(G) \bt \Rep(G)$-module categories,
+\[
+\Rep(G) \simeq \cO(G)-mod(\Rep(G) \bt \Rep(G))
+\]
+and of $\Rep_q(G) \bt \Rep_q(G)$-module categories,
+\[
+\Rep_q(G) \simeq \cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G)).
+\]
+\end{lemma}
+
+\begin{proof}
+In both cases, we apply \cite[Thm. 4.6]{ben-zviIntegratingQuantumGroups2018}. In this setting, for the first equivalence, the rigid abelian category is $\Rep(G) \bt \Rep(G)$, acting on $\Rep(G)$ with the action given by left and right tensor product, and $\One \in \Rep(G)$ a progenerator. We note that internal endomorphisms of the progenerator are given by the action monad $act^R_{\One} \circ act_{\One} (\One)$. Clearly $act_{\One}(\One) = \One$, and then from \pk{rigidity} of $\Rep(G)$, we have
+\[
+act^R_{\One}(\One) = \int^x x^{\vee} \bt x \cong \cO(G)
+\]
+which proves the first equivalence.
+
+The second equivalence is similar, except in the last step we use cp-rigidity of $\Rep_q(G)$ and that in this case
+\[
+act^R_{\One}(\One) = \int^x \in c.p. x^{\vee} \bt x \cong \cO_q(G).
+\]
+\end{proof}
+
+We also recall the following important fact. which uses \cite[Prop. 5.3, Cor. 5.5, Lemma 5.7]{brochierDualizabilityBraidedTensor2018}.
+
+\begin{lemma}
+\label{l-module-category-exchange}
+Let $\cC \in \Pr$ be dualizable over $\cC^e$ \pk{check terminology here}, and $\cM$ a left or right $\cC$-module, dualizable in $\Pr$, and $A \in \cC$ an algebra object. Then we have that
+\[
+Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM)
+\]
+and
+\[
+LMod_A(\cC) \bt_\cC \cM \simeq LMod_A(\cM).
+\]
+\end{lemma}
+
+Now we are ready to compute the relative tensor product.
 
 \begin{prop}
 \label{p-Rep_q_Rep_Rep_q-is-O(G)-mod}
@@ -157,14 +198,33 @@ a \bt b \mapsto a \bt b \bt_{\cO(G)} k
 \]
 \end{prop}
 
-The below lemma follows from the proof of \cite[Thm. 4.18]{ben-zviIntegratingQuantumGroups2018}.
-
-\begin{lemma}
-There is an equivalence of $\Rep_q(G) \bt \Rep_q(G)$-module categories
+\begin{proof}
+Notice that $\Rep(G) \bt \Rep(G)$ acts on $\Rep_q(G) \bt \Rep_q(G)$ by
 \[
-\Rep_q(G) \simeq \cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G)).
+(X \bt Y) \ot (U \ot V) = (U \ot Fr^*(X)) \bt (Fr^*(Y) \ot V)
 \]
-\end{lemma}
+and this is an action because $\Rep(G)$ is a symmetric \pk{braided all we need perhaps?} tensor category. Also, $\Rep(G) \bt \Rep(G)$ acts on $\Rep(G)$ by
+\[
+(X \bt Y) \ot Z = X \ot Y \ot Z.
+\]
+Now, it is easy to check that the map
+\begin{align*}
+\Rep_q(G) \bt \Rep_q(G) &\to (\Rep_q(G) \bt \Rep_q(G)) \bt_{\Rep(G) \bt \Rep(G)} \Rep(G)\\
+U \bt V &\mapsto U \bt V \bt \One
+\end{align*}
+is well defined, and equips $(\Rep_q(G) \bt \Rep_q(G)) \bt_{\Rep(G) \bt \Rep(G)} \Rep(G)$ with the universal property for the colimit of the diagram
+\[
+\Rep_q(G) \bt \Rep_q(G) \stackleftarrow{2} \Rep_q(G) \bt \Rep(G) \Rep_q(G) \stackleftarrow{3} \Rep_q(G) \bt \Rep(G) \bt \Rep(G) \bt \Rep_q(G) \stackleftarrow{4} \dots
+\]
+We therefore have an equivalence
+\[
+\Rep_q(G) \bt \Rep_q(G) \simeq (\Rep_q(G) \bt \Rep_q(G)) \bt_{\Rep(G) \bt \Rep(G)} \Rep(G).
+\]
+But notice that by Lemma \ref{l-rep_(q)-as-module-cats}, we then have
+\begin{align*}
+\Rep_q(G) \bt \Rep_q(G) &\simeq (\Rep_q(G) \bt \Rep_q(G)) \bt_{\Rep(G) \bt \Rep(G)} LMod_{\cO(G)}(\Rep(G) \bt \Rep(G))\\ &\simeq LMod_{\cO(G)}(\Rep_q(G) \bt \Rep_q(G)).
+\end{align*}
+\end{proof}
 
 %\begin{proof}
 %\pk{Recall} that $\Rep_q(G)$ is cp-rigid, and so the tensor product functor admits a right adjoint, given by
@@ -207,7 +267,7 @@ There is an equivalence
 where on the RHS we regard $\Rep_q(G) \bt_{\Rep_G} \Rep_q(G)$ as $\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ by Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
 \end{cor}
 
-We notice that forgetting $\cO(G)$-module structures, we then have an action of $\Rep_q(G) \bt_{\Rep_(G)} \Rep_q(G) \simeq \cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ on $\Rep(G)$ via the action of $\Rep_q(G) \bt \Rep_q(G)$ \pk{check!!}.
+We notice that forgetting $\cO(G)$-module structures, we then have an action of $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ on $\Rep(G)$ via the action of $\Rep_q(G) \bt \Rep_q(G)$ \pk{check!!}.
 
 The situation is summarised in the following diagram:
 
@@ -231,9 +291,14 @@ The situation is summarised in the following diagram:
 \end{tikzcd}\]
 
 
-We will abuse notation and refer to the functor corresponding to $T$ under the equivalence of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod} by $T$ also. We note that by similar arguments to those in the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}, we should be able to show that $\Rep_q(G)$ is cp-rigid. Then it will follow that $\ot$ has a right adjoint, and so by composing adjoints we see that $T$ has a right adjoint $T^R = triv \circ \ot^R$. \pk{check that it is triv here!}
+We will abuse notation and refer to the functor corresponding to $T$ under the equivalence of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod} by $T$ also. We note that by similar arguments to those in the \pk{old!} proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}, we should be able to show that $\Rep(G)$ is cp-rigid. Then it will follow that $\ot$ has a right adjoint, and so by composing adjoints we see that $T$ has a right adjoint $T^R = triv \circ \ot^R$. \pk{check that it is triv here!}
 
-We define $o_q(G) = TT^R(\One) \in \Rep_q(G)$.
+We define $o_q(G) = TT^R(\One) \in \Rep_q(G)$, and notice that we should have, by our diagram,
+\[
+o_q(G) = (\int^X \in \Rep_q(G)^{c.p.} X^{\vee} \ot X) \ot_{\cO(G)} \One.
+\]
+
+\pk{check this...}
 
 \begin{comment}
 We will also need the following general fact.
@@ -288,17 +353,17 @@ This establishes that $T$ is co-monadic, and then the first claim follows from t
 
 %This establishes that $T$ satisfies the conditions of crude co-monadicity, so the first equivalence is proven.
 
-For the second equivalence, we recall an equivalence
-\begin{equation}
-\label{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}
-Fun_\cC(LMod_A(\cC), \cM) \simeq RMod_A(\cM)
-\end{equation}
-where $\cM$ is a $\cC$-module category and $A \in \cC$ an algebra object. This is shown in the $\infty$-categorical setting in \cite{lurieHigherAlgebra}. \pk{Where!?} Also see \cite[5.3, 5.7]{brochierDualizabilityBraidedTensor2018} where there are \pk{dualizability hypotheses on $\cC$}.
-
-We then combine Cor. \ref{cl-Rep_q-is-O_q-mod-in-O-mod} and equation (\ref{eq-Fun_C(Lmod_A(C), M)-is-Rmod_A(M)}), to see that
+We then combine Lemma \ref{l-module-category-exchange} and Cor. \ref{cl-Rep_q-is-O_q-mod-in-O-mod}, to see that
 \begin{align*}
-Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(&\Rep_q(G), \Rep_q(G))\\ &\simeq Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(\cO_q(G)-mod(\Rep_q(G) \bt_{\Rep_G} \Rep_q(G)), \Rep_q(G))\\ &\simeq o_q(G)-mod(\Rep_q(G)).
+Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(&\Rep_q(G), \Rep_q(G))\\ &\simeq Fun_{\Rep_q \bt_{\Rep(G)} \Rep(G)}(\cO_q(G)-mod(\Rep_q(G) \bt_{\Rep_G} \Rep_q(G)), \Rep_q(G))\\ &\simeq \cO_q(G)-mod(\Rep_q(G)).
 \end{align*}
+In the last line here, $\Rep_q(G)$ is being regarded as a module category for $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$, and we consider module objects for the algebra $\cO_q(G) \in \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ via the categorical action.
+
+We can then \pk{use the braiding!} to give an equivalence
+\[
+\cO_q(G)-mod(\Rep_q(G)) \simeq o_q(G)-mod(\Rep_q(G))
+\]
+where now on the right hand side we have an honest module category.
 \end{proof}
 
 There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$.
