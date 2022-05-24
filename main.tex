@@ -363,7 +363,11 @@ We can then \pk{use the braiding!} to give an equivalence
 \[
 \cO_q(G)-mod(\Rep_q(G)) \simeq o_q(G)-mod(\Rep_q(G))
 \]
-where now on the right hand side we have an honest module category.
+where now on the right hand side we have an honest module category. We'll have a diagram like
+
+\pk{DIAGRAM HERE...}
+
+and this should correspond to $o_q(G) \ot V \to V$ \pk{Where does taking $\cO(G)$-invariants happen?}
 \end{proof}
 
 There exists a \pk{canonical} pairing $\Omega : o_q(G) \ot o_q(G) \to \One$.
@@ -389,7 +393,81 @@ We notice that, under the forgetful functor $\Rep_q(G) \to \Rep u_q(G)$ induced 
 \end{proof}
 Therefore, the relative factorizability conditions hold.
 
+\subsection{Understanding the pairing}
+
 Now let's sketch the proof of Proposition \ref{p-factorizability-as-Omega}.
+
+To write down a pairing on $o_q(G)$ in terms of the individual elements of the co-end, we would like to not worry about the $\cO(G)$-relativity. So we'd like to write down the pairing for $\cO_q(G)$, and show/argue/understand why this descends to $o_q(G)$.
+
+First, it might help to trace the square in the non-relative case, so we'll do this.
+
+\subsubsection{The non-relative case}
+
+In this case, we have the following.
+\begin{enumerate}
+\item Using cp-rigidity of $\Rep_q(G)$, we have that the tensor product functor $\Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ has a right adjoint, $X \mapsto (X \bt \One) \ot \cO^{FRT}_q(G)$, and this adjunction is monadic. Hence the comparison functor
+\[
+X \mapsto (X \bt \One) \ot \cO^{FRT}_q(G)
+\]
+is an equivalence of categories $\Rep_q(G) \simeq RMod_{\cO_q^{FRT}(G)}(\Rep_q(G) \bt \Rep_q(G))$. We have given a functor going one way: the functor going the other will be taking $\cO_q(G)$-coinvariants, and this can be seen by looking in detail at the proof of the monadicity theorem.
+
+In other words, the inverse of the comparison functor will take $\cO^{FRT}_q(G)$ to $\One$. The reason is that, for $T, T^R$ the adjunction, the functor back from $T^RT$-algebras will take a $T^RT$-algebra to the coequalizer of the diagram
+% https://q.uiver.app/?q=WzAsMixbMCwwLCJUVF5SVEEiXSxbMiwwLCJUQSJdLFswLDEsIlxcZXBzaWxvbl97VEF9IiwyLHsib2Zmc2V0IjoyfV0sWzAsMSwiVFxcYWxwaGEiLDAseyJvZmZzZXQiOi0yfV1d
+\[\begin{tikzcd}
+	{TT^RTA} && TA
+	\arrow["{\epsilon_{TA}}"', shift right=2, from=1-1, to=1-3]
+	\arrow["T\alpha", shift left=2, from=1-1, to=1-3]
+\end{tikzcd}\]
+but when $A$ is itself of the form $T^RT(\One)$ then it is easy to see that $TT^RT(\One) \xrightarrow{\epsilon_{T\One}} T(\One)$ equalizes, since in this case $\alpha = T^R\epsilon_{T(\One)}$. See \cite[Lemma 5.10]{johnstoneCategoryTheoryLecture2019} for more details.
+
+\item We then have a functor $\Rep_q(G) \bt \Rep_q(G) \to RMod_{\cO_q^{FRT}(G)}(\Rep_q(G) \bt \Rep_q(G))$. It is composed of $\ot$ and the above monadic equivalence. So in particular it has a right adjoint. The functor, \pk{up to a natural transformation}, is given by
+\[
+X \bt Y \mapsto (X \bt Y) \ot \cO^{FRT}_q(G)
+\]
+i.e. it is the free right module functor. Now, we regard any object in $\Rep_q(G) \bt \Rep_q(G)$ as a right module over its unit $\One$, i.e. $\Rep_q(G) \bt \Rep_q(G) \simeq RMod_{\One}(Rep_q(G) \bt \Rep_q(G))$. Then the functor in question is $- \ot_{\One} \cO_q(G)$, tensoring along the inclusion $\One \to \cO_q(G)$. We regard $\One$ as a trivial, and hence trivially commutative, Hopf algebra. Then by \cite[Prop. 3.12]{arkhipovAnotherRealizationCategory2002} \pk{or maybe it's more obvious in this case?} $\cO_q(G)$ is a faithfully flat module, which is to say that the above functor is comonadic. So we have
+\[
+\Rep_q(G) \bt \Rep_q(G) \simeq \cO^{FRT}_q(G)-comod(\cO^{FRT}_q(G)-mod(\Rep_q(G) \bt \Rep_q(G))).
+\]
+Again, the functor right-left is given by $-\ot_{\cO_q^{FRT}(G)} \One$.
+
+
+There is also an equivalence $LCoMod_{\cO_q(G)}(\Rep_q(G)) \to LCoMod_{\cO^{FRT}_q(G)}(\Rep_q(G))$. The source category is really the category of modules for an algebra $\cO_q(G) = T(\cO_q^{FRT}(G))$ internal to $\Rep_q(G)$, while the target category is a category of module objects defined via the action of $\Rep_q(G) \bt \Rep_q(G)$, and they are related by braiding (see a later point).
+
+So by now we have a composition
+\begin{align*}
+LCoMod_{\cO_q(G)}(\Rep_q(G)) &\to LCoMod_{\cO^{FRT}_q(G)}(LMod_{\cO^{FRT}_q(G)}(\Rep_q(G) \bt \Rep_q(G))) &\to \Rep_q(G) \bt \Rep_q(G)\\
+\cO_q(G) &\mapsto \cO^{FRT}_q(G) \bt \cO^{FRT}_q(G) & \mapsto \cO^{FRT}_q(G).
+\end{align*}
+
+\item We also have that the target of cofactorizability can be written as
+\begin{align*}
+Fun_{\Rep_q(G) \bt \Rep_q(G)}(\Rep_q(G), \Rep_q(G)) \xrightarrow{\sim} Fun_{\Rep_q(G) \bt \Rep_q(G)}(RMod_{\cO^{FRT}_q(G)}(\Rep_q(G) \bt \Rep_q(G)), \Rep_q(G)) \xrightarrow{\sim} LMod_{\cO^{FRT}_q(G)}(\Rep_q(G)).
+\end{align*}
+The first map is induced by the \pk{free} $\cO_q^{FRT}(G)$-module functor $\Rep_q(G) \to RMod_{\cO^{FRT}_q(G)}(\Rep_q(G)$, so it sends $F \mapsto F \circ - \ot_{\cO_q^{FRT}(G)} \One$. The second sends $F \mapsto F(A)$, so that in total we have a functor $F \mapsto F(\One)$.
+
+It is clear \pk{or we can check} that the module structure is just multiplication in $\Rep_q(G)$??
+
+We then have, similar to before, that
+\begin{equation} LMod_{\cO^{FRT}_q(G)}(\Rep_q(G)) \simeq LMod_{\cO_q(G)}(\Rep_q(G)).
+\end{equation}
+
+Putting this together, we get a functor
+\begin{align*}
+\End_{\Rep_q(G) \bt \Rep_q(G)}(\Rep_q(G)) \to LMod_{\cO_q(G)}(\Rep_q(G)).
+\end{align*}
+
+\item Now, we've seen that $\cO_q(G) \mapsto \cO_q^{FRT}(G) \in \Rep_q(G) \bt \Rep_q(G)$. Then under the factorizability map, this becomes the usual action of $\cO^{FRT}_q(G)$ by left/right multiplication. Then, under the functors above, we should obtain a module structure on $\cO_q(G)$, and it had better be the pairing $\Omega$ once we compose with $\epsilon$. To see this, it effectively suffices to understand how the map $LMod_{\cO^{FRT}_q(G)}(\Rep_q(G)) \simeq LMod_{\cO_q(G)}(\Rep_q(G))$ works.
+
+\item In general, let $M$ be a module in the sense of the action of $\Rep_q(G) \bt \Rep_q(G)$ on $\Rep_q(G)$, for $X \bt Y$. So there will be a map $X \ot M \ot Y \xrightarrow{\nabla} M$. Then one can check that $M$ has the structure of a left module for $X \ot Y$ under the action
+\begin{align*}
+X \ot Y \ot M \xrightarrow{T(\nabla) \circ \sigma_{Y, M}}.
+\end{align*}
+Then, under this identification, we are almost there: just need to figure out how to right the self-action for $\cO^{FRT}_q(G)$ appropriately!
+\end{enumerate}
+
+
+
+---------------
 
 We want to understand what happens to the canonical comodule structure on $o_q(G)$, under the functor
 \[
@@ -446,8 +524,7 @@ We do have a functor $T : \cA \to \cC$, with $T(B) = A$, and also posessing a ri
 
 We could try to unpack/be precise about the LHS too, though I actually think this will not solve the problem...
 
---------
-
+\subsection{Old proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}}
 Below we sketch the proof of Proposition \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}.
 
 Recall that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)$ is given by the colimit of the diagram below.
@@ -579,13 +656,99 @@ Having understood this, then using (\ref{eq-monad}) we see that the category of 
 which by the Peter-Weyl theorem is none other than the algebra of functions $\cO(G)$ regarded as an algebra in $\Rep_q(G) \bt \Rep_q(G)$ \pk{?}
 
 \section{Relative cofactorizability}
-We echo the argument of \cite{brochierInvertibleBraidedTensor2020} that cofactorizability is equivalent to factorizability. Recall the functor
+
+\subsection{Preliminary facts}
+Here are some facts we'll need.
+
+\begin{lemma}
+Let $A$ be a bialgebra object in a monoidal category $\cC$, which is moreover dualizable. Then there is an equivalence of categories
+\[
+LCoMod_A(\cC) \simeq LMod_{A^{\vee}}(\cC).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $M$ be a left $A$-comodule with coaction $M \xrightarrow{\Delta} A \ot M$. Then we can functorially produce the module structure given by
+\[
+A^{\vee} \ot M \xrightarrow{1 \ot \Delta} A^{\vee} \ot A \xrightarrow{ev \ot 1}.
+\]
+Conversely, given a module $A^{\vee} \ot M \xrightarrow{\nabla} M$ we associate the comodule
+\[
+M \xrightarrow{coev \ot 1} A \ot A^{\vee} \ot M \xrightarrow{1 \ot \nabla} A \ot M.
+\]
+Now, doing one functor then the other we take the comodule $ M \xrightarrow{\Delta} A \ot M$ to the comodule with coaction given by
+\[
+(1 \ot ev \ot 1) \circ (1 \ot 1 \ot \Delta) \circ (coev \ot 1) = (1 \ot ev \ot 1) \circ (coev \ot 1 \ot 1) \circ \Delta = \Delta
+\]
+where the first equality is simply the rules of tensor categories, and the second is from dualizability. \pk{can see this in a picture.} There is a similar composition for the other functors.
+
+From this, we conclude that the functors are essentially surjective. Moreover, the functors are both the identity on morphisms when we forget to the underlying maps of objects in $\cC$, so they are clearly faithful; by the bicomposition properties on objects, they are full also. \pk{diagrams here?}
+\end{proof}
+
+\begin{lemma}
+\label{l-duals-adjoints}
+Let $\cC, \cD$ be dualizable categories and $F : \cC \to \cD$ a functor with a left adjoint $F^L$ and adjunction data $\epsilon : F^L \circ F \to 1_\cC, \eta : 1_\cD \to F^L \circ F$. Then the functor $F^\vee$ has a right adjoint given by $(F^L)^\vee$.
+\end{lemma}
+
+\begin{proof}
+We note that passage to dual categories is covariant in natural transformations. Therefore the unit and counit of the given adjunction become natural transformations
+\[
+F^\vee \circ (F^L)^\vee \to 1_{\cC^\vee}, 1_{\cD^\vee} \to (F^L)\vee \circ F^\vee
+\]
+satisfying the required diagrams, so we have that $F^\vee \dashv (F^L)^\vee$.
+\end{proof}
+
+Finally, we recall that an adjoint equivalence is an adjunction such that the unit and counit are natural isomorphisms.
+
+\begin{lemma}
+Let $F$ be a functor which is an equivalence (more generally, a 1-morphism which is an equivalence in a bicategory). Then there exists $F dashv G$ such that this is an adjoint equivalence; and by uniqueness up to unique isomorphism of adjoints, any functor which is right adjoint to $F$ is an equivalence.
+\end{lemma}
+
+\begin{proof}
+See \cite{AdjointEquivalence}
+\end{proof}
+
+\pk{Now work out the functor from rel factorizability and argue what its left adj should be...}
+
+\subsection{Main ideas}
+We have in the last section shown that the relative factorizability functors are equivalent to a functor
+\[
+LCoMod_{o_q(G)}(\Rep_q(G)) \to LMod_{o_q(G)}(\Rep_q(G))
+\]
+and moreover that this functor is an equivalence. Then, if this functor has an adjoint, we can say that its adjoint is the equivalence inverse. We \pk{claim} that the adjoint is the functor
+\begin{align*}
+LMod_{o_q(G)} &\to LCoMod_{o_q(G)}\\
+M &\mapsto o_q(G)^{\vee} \ot_{o_q(G)} M.
+\end{align*}
+
+Moreover, we would like to show that the relative cofactorizability map is equivalent to the functor above. To deal with the source, we have:
+
+\begin{prop}
+There is an equivalence
+\[
+HC_{\cA}(\cC) \simeq \cO_q(G)-mod(\cC).
+\]
+\end{prop}
+
+\begin{proof}
+Let $T : \Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ the tensor product functor. We \pk{claim - from cp-rigidity?} that this has a right adjoint $T^R$ and that the adjunction $T \dashv T^R$ is monadic, so that $\Rep_q(G) \simeq T^RT(\One)-mod(\Rep_q(G) \bt \Rep_q(G))$. Moreover, we \pk{claim} that $T^RT(\One) \simeq \cO_q(G) \in \Rep_q(G) \bt \Rep_q(G)$.
+
+The quantum Frobenius map $\Fr : \Ures_q(G) \to U(G)$ induces a map $\Fr^* : \cO(G) \to \cO_q(G)$ of bialgebras, which in turn allows us to regard any $\cO_q(G)$-module as an $\cO(G)$-module by pulling back.
+
+Now, it is a \pk{general fact} that
+\[
+A-mod(\cC) \bt_\cC \cM \simeq A-mod(\cM)
+\]
+(\pk{what conditions here?}) where $\cM$ is a $\cC$-module category. Here, we let $\cC = \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \cO(G)-\mod(\Rep_q(G) \bt \Rep_q(G))$ (using Prop. \ref{p-Rep_q_Rep_Rep_q-is-O(G)-mod}), $\cM \simeq \Rep_q(G)$. Since $\cO_q(G)$-modules can be regarded as $\cO(G)$-modules, we have $\cO_q(G) \in \cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))$ and $\cO_q(G)-mod(\cO(G)-mod(\Rep_q(G) \bt \Rep_q(G))) \simeq \cO_q(G)-mod(\Rep_q(G) \bt \Rep_q(G)) \simeq \Rep_q(G)$. Then taking $A = \cO_q(G)$, the left-hand-side above becomes $\Rep_q(G) \bt_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)} \Rep_q(G) = HC_{\Rep(G)}(\Rep_q(G))$, and we see that this is equivalent to $\cO_q(G)-mod(\Rep_q(G))$.
+\end{proof}
+
+For the target, we have to do some monadicity argument using tens.
+
+Recall the functor
 \begin{align*}
 \tens: \cC &\to \Fun(\cC, \cC)\\
 x &\mapsto x \ot -
 \end{align*}
-
-We begin with the following claim.
 
 \begin{prop}
 The functor $\tens$ is the dual of $T : \cC \bt \cC \to \cC$ as a map of $\cC_1$-modules (here $\cC_1$ denoted the left factor of $\cC$ in $\cC \bt \cC$).
@@ -601,6 +764,7 @@ and we have
 T \mapsto (c \mapsto (\sum c^i \bt c_i) \bt c \mapsto \sum c^i \bt (c_i \ot c))
 \]
 where we see that the right functor is simply $\tens$. \pk{possibly on the right?}
+\pk{See \cite[D.2.2]{gaitsgorySheavesCategoriesNotion2015}.}
 \end{proof}
 
 Then it follows that:
@@ -610,10 +774,20 @@ $T$ has a left adjoint which is a functor of $\cC \bt \cC$-module categories if 
 \end{prop}
 
 \begin{proof}
-The idea is that, $   (T^{\vee})^R = (T^L)^{\vee}$. \pk{A bit muddled on this!}
+The idea is that, $(T^{\vee})^R = (T^L)^{\vee}$, see \ref{l-duals-adjoints}.
 \end{proof}
 
-We \pk{claim} that in our case $T$ has a left adjoint, so $\tens$ has a right adjoint, and we define $E = \tens^R(\One)$.
+We apply the above in the \pk{setting} where $\cC = \Rep_q(G)$ is \pk{self-dual} as a $\Rep(G)$-module category. So we are considering tens as the dual of the map $T : \Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \to \Rep_q(G)$.
+
+\begin{lemma}
+In this case, $T$ has a left adjoint.
+\end{lemma}
+
+\begin{proof}
+Recall from Proposition \ref{p-factorizability-equivs} that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq LCoMod_{o_q(G)}(\Rep_q(G))$. Moreover, non-degeneracy of the pairing $\Omega$ from the previous section establishes that $o_q(G)$ is dualizable in $\Rep_q(G)$ \pk{why?}, and so $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq LMod_{o_q(G)^\vee}(\Rep_q(G))$. Then it follows that \pk{!!!!!} the functor $T$ is equivalent to forgetting the $o_q(G)$-module structure. But clearly this has a left adjoint of taking a free $o_q(G)^\vee$-module structure.
+\end{proof}
+
+so $\tens$ has a right adjoint, and we define $E = \tens^R(\One)$.
 
 We can also argue the following.
 
