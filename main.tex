@@ -8,6 +8,7 @@
 \usepackage{pkinne}
 \usepackage{stmaryrd} % For mapsfrom
 \usepackage{comment}
+\usepackage{subcaption}
 
 \usepackage{amsmath}
 \usepackage{pict2e}
@@ -87,7 +88,7 @@
     \draw[<-](0,\r pt)--(#1,\r pt);
     }}\;}
 
-\title{Relative factorizability}
+\title{Relative cofactorizability}
 \author{Patrick Kinnear}
 \date{}
 
@@ -130,318 +131,300 @@ We note that the functors in the conditions above are braided tensor functors \p
 There is a tensor product functor $T : \Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$, and it has a right adjoint. We denote $\cO_q(G)^{FRT} = T^RT(\One) = \int^{X} X^{\vee} \bt X \in \Rep_q(G) \bt \Rep_q(G)$, and $\cO_q(G) = T(\cO_q^{FRT}(G)) = \int^{X} X^{\vee} \ot X \in \Rep_q(G)$. There are also corresponding objects $\cO^{FRT}(G), \cO(G)$ where the coend is now only over representations fo $G$/the image of Frobenius pullback/the M\"{u}ger center. Finally, there are objects $o^{FRT}_q(G) = \cO^{FRT}_q(G) \ot_{\cO^{FRT}(G)} \One, o_q(G) = \cO_q(G) \ot_{\cO(G)} \One$.
 \end{notn}
 
-\section{Sketch of the strategy}
-We are interested in showing the functor
+\section{The proof}
+We are interested in the functor
 \[
-\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \to \End_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)}(\Rep_q(G))
+HC_\cA(\cC) \to \Hom_\cA(\cC, \cC).
 \]
-given on objects by acting on the left and right, is an equivalence.
-
-To show this, we will proceed as follows.
-
-\begin{enumerate}
-\item We will show that $\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G) \simeq \RCoMod_{o_q(G)}(\Rep_q(G))$, and that $\End_{\Rep_q(G) \bt_{\Rep(G)} \Rep_q(G)}(\Rep_q(G)) \simeq \RMod_{o_q(G)}(\Rep_q(G))$. Then it suffices to consider the induced functor $\RCoMod_{o_q(G)}(\Rep_q(G))\to \RMod_{o_q(G)}(\Rep_q(G))$ and show this is an equivalence.
-\item We recall that a functor $\RCoMod_{A}(\cC)\to \RMod_{A}(\cC))$ is equivalent to a Hopf pairing $\Omega : A \ot A \to \One$, and that the functor is an equivalence if and only if the pairing is non-degenerate. The functor $F : \RCoMod_{A}(\cC)\to \RMod_{A}(\cC)$ corresponds to the pairing
-\[
-A \ot A \xrightarrow{\nabla_F} A \xrightarrow{\epsilon} \One
-\]
-where $\nabla_F$ is the module structure obtained under $F$ from the standard comodule structure on $A$. See Appendix \ref{app-comod-mod-pairings} for details.
-\item We will compute the pairing on $o_q(G)$ coming from our functor $\RCoMod_{o_q(G)}(\Rep_q(G))\to \RMod_{o_q(G)}(\Rep_q(G))$. We will show that, under a forgetful functor $\Rep_q(G) \to \Rep u_q(G)$, this pairing is one which is known to be non-degenerate.
-\item To compute the pairing, we will first compute a pairing on $\cO_q(G)$ coming from the functor $\RCoMod_{\cO_q(G)}(\Rep_q(G))\to \RMod_{\cO_q(G)}(\Rep_q(G))$ induced by the non-relative version of the factorizability functor.
-\item Then, we will show that this pairing on $\cO_q(G)$ descends to the pairing on $o_q(G)$, and it will be clear from the $\cO_q(G)$ computations that the pairing is the one we want under the forgetful functor.
-\end{enumerate}
-
-Therefore, we must first treat the non-relative case of the factorizability functor and obtain the corresponding pairing. The multiplication for $\cO_q(G)$ and the desured pairing are shown in Figure \ref{f-mult-pairing}, where diagrams are read bottom-top.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{img/mult-pairing.png}
-\caption{The multiplication and Hopf pairing.}
-\label{f-mult-pairing}
-\end{figure}
-
-\section{The non-relative case}
-
-In this case, we have the following.
-\begin{enumerate}
-\item Using cp-rigidity of $\Rep_q(G)$, we have that the tensor product functor $\Rep_q(G) \bt \Rep_q(G) \to \Rep_q(G)$ has a right adjoint, $X \mapsto (X \bt \One) \ot \cO^{FRT}_q(G)$, and this adjunction is monadic. Hence the comparison functor
-\[
-X \mapsto (X \bt \One) \ot \cO^{FRT}_q(G)
-\]
-is an equivalence of categories $\Rep_q(G) \simeq \RMod_{\cO_q^{FRT}(G)}(\Rep_q(G) \bt \Rep_q(G))$. We have given a functor going one way: the functor going the other will be taking $\cO_q(G)$-coinvariants, and this can be seen by looking in detail at the proof of the monadicity theorem.
-
-In other words, the inverse of the comparison functor will take $\cO^{FRT}_q(G)$ to $\One$. The reason is that, for $T, T^R$ the adjunction, the functor back from $T^RT$-algebras will take a $T^RT$-algebra to the coequalizer of the diagram
-% https://q.uiver.app/?q=WzAsMixbMCwwLCJUVF5SVEEiXSxbMiwwLCJUQSJdLFswLDEsIlxcZXBzaWxvbl97VEF9IiwyLHsib2Zmc2V0IjoyfV0sWzAsMSwiVFxcYWxwaGEiLDAseyJvZmZzZXQiOi0yfV1d
+The target consists of pairs $(F, \alpha)$, where $F : \cC \to \cC$ is a functor and $\alpha$ is a family of natural isomorphisms  $\alpha_a : F(a \ot - ) \to a \ot F(-)$ for $a \in \cA$. Morphisms $(F, \alpha) \to (G, \beta)$ in $\End_{\cA}(\cC)$ are given by natural transformations $\zeta : F \to G$ such that
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJCIl0sWzIsMCwiQyJdLFswLDIsIkEiXSxbMiwyLCJEIl0sWzAsMV0sWzEsM10sWzIsM10sWzAsMl1d
 \[\begin{tikzcd}
-	{TT^RTA} && TA
-	\arrow["{\epsilon_{TA}}"', shift right=2, from=1-1, to=1-3]
-	\arrow["T\alpha", shift left=2, from=1-1, to=1-3]
+	F(a \ot - ) && G(a \ot - ) \\
+	\\
+	a \ot F(-) && a \ot G(-)
+	\arrow["\zeta_{a \ot - }", from=1-1, to=1-3]
+	\arrow["\beta_a", from=1-3, to=3-3]
+	\arrow["a \ot \zeta", from=3-1, to=3-3]
+	\arrow["\alpha_a", from=1-1, to=3-1]
 \end{tikzcd}\]
-but when $A$ is itself of the form $T^RT(\One)$ then it is easy to see that $TT^RT(\One) \xrightarrow{\epsilon_{T\One}} T(\One)$ equalizes, since in this case $\alpha = T^R\epsilon_{T(\One)}$. See \cite[Lemma 5.10]{johnstoneCategoryTheoryLecture2019} for more details.
 
-\item We then have a functor $\Rep_q(G) \bt \Rep_q(G) \to \RMod_{\cO_q^{FRT}(G)}(\Rep_q(G) \bt \Rep_q(G))$. It is composed of $\ot$ and the above monadic equivalence. So in particular it has a right adjoint. The functor, up to a natural transformation, is given by
+
+The relative cofactorizability functor then takes
 \[
-X \bt Y \mapsto (X \bt Y) \ot \cO^{FRT}_q(G)
+c \bt d \mapsto (v \mapsto c \ot v \ot d, \sigma_{c, -}).
 \]
-i.e. it is the free right module functor. Now, we regard any object in $\Rep_q(G) \bt \Rep_q(G)$ as a right module over its unit $\One$, i.e. $\Rep_q(G) \bt \Rep_q(G) \simeq \RMod_{\One}(Rep_q(G) \bt \Rep_q(G))$. Then the functor in question is $- \ot_{\One} \cO_q(G)$, tensoring along the inclusion $\One \to \cO_q(G)$. We regard $\One$ as a trivial, and hence trivially commutative, Hopf algebra. Then by \cite[Prop. 3.12]{arkhipovAnotherRealizationCategory2002} $\cO_q(G)$ is a faithfully flat module, which is to say that the above functor is comonadic. So we have
+
+Now, we have that there is an equivalence $HC_{\cA}(\cC) \simeq \LMod_{o_q(G)}(\cC)$. Moreover, there is an equivalence $\End_{\cA}(\cC) \simeq \LCoMod_{o_q(G)}(\cC)$. We would like to understand the functor below.
+
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJCIl0sWzIsMCwiQyJdLFswLDIsIkEiXSxbMiwyLCJEIl0sWzAsMV0sWzIsMF0sWzEsM11d
+\[\begin{tikzcd}
+	HC_{\cA}(\cC) && \End_{\cA}(\cC) \\
+	\\
+	\LMod_{o_q(G)}(\cC) && \LCoMod_{o_q(G)}(\cC)
+	\arrow[from=1-1, to=1-3]
+	\arrow[from=3-1, to=1-1]
+	\arrow[from=1-3, to=3-3]
+\end{tikzcd}\]
+
+We first try to understand the functor given by the first two legs, $\Phi : \LMod_{o_q(G)}(\cC) \to \End_{\cA}(\cC)$. We will make a claim for this functor and check that the composition $\Phi \circ \Psi$ is relative cofactorizability, where $\Psi : HC_{\cA}(\cC) \to \LMod_{o_q(G)}(\cC)$ implements the equivalence of the first leg.
+
+\begin{claim}
+The functor $\Psi$ is given on objects by
 \[
-\Rep_q(G) \bt \Rep_q(G) \simeq \RCoMod_{\cO_q^{FRT}(G)}(\RMod_{\cO_q^{FRT}(G)}(\Rep_q(G) \bt \Rep_q(G))).
+c \bt d \mapsto o_q(G) \ot c \ot d.
 \]
-Again, the functor right-left is given by $-\ot_{\cO_q^{FRT}(G)} \One$.
+\end{claim}
 
-
-There is also an equivalence $\RCoMod_{\cO_q(G)}(\Rep_q(G)) \to \RCoMod_{\cO^{FRT}_q(G)}(\Rep_q(G))$. The source category is really the category of modules for an algebra $\cO_q(G) = T(\cO_q^{FRT}(G))$ internal to $\Rep_q(G)$, while the target category is a category of module objects defined via the action of $\Rep_q(G) \bt \Rep_q(G)$, and they are related by braiding (see a later point).
-
-So by now we have a composition
-\begin{align*}
-\RCoMod_{\cO_q(G)}(\Rep_q(G)) &\xrightarrow{\sim} \RCoMod_{\cO^{FRT}_q(G)}(\RMod_{\cO^{FRT}_q(G)}(\Rep_q(G) \bt \Rep_q(G)))\\ &\xrightarrow{\sim} \Rep_q(G) \bt \Rep_q(G)\\
-\end{align*}
-sending $\cO_q(G) \mapsto \cO^{FRT}_q(G) \bt \cO^{FRT}_q(G) \mapsto \cO^{FRT}_q(G)$.
-
-\item We also have that the target of factorizability can be written as
-\begin{align*}
-&\Fun_{\Rep_q(G) \bt \Rep_q(G)}(\Rep_q(G), \Rep_q(G))\\
-&\xrightarrow{\sim} \Fun_{\Rep_q(G) \bt \Rep_q(G)}(\LMod_{\cO^{FRT}_q(G)}(\Rep_q(G) \bt \Rep_q(G)), \Rep_q(G))\\
-&\xrightarrow{\sim} \RMod_{\cO^{FRT}_q(G)}(\Rep_q(G)).
-\end{align*}
-The first map is induced by the free $\cO_q^{FRT}(G)$-module functor $\Rep_q(G) \to \LMod_{\cO^{FRT}_q(G)}(\Rep_q(G)$, so it sends $F \mapsto F \circ \One \ot_{\cO_q^{FRT}(G)} -$. The second sends $F \mapsto F(A)$, so that in total we have a functor $F \mapsto F(\One)$.
-
-We need to understand the module structure here.
-
-We then have, similar to before, that
-\begin{equation}
-\label{eq-FRT-ordinary-modules}
-\RMod_{\cO^{FRT}_q(G)}(\Rep_q(G)) \simeq \RMod_{\cO_q(G)}(\Rep_q(G)).
-\end{equation}
-
-Putting this together, we get a functor
-\begin{align*}
-\End_{\Rep_q(G) \bt \Rep_q(G)}(\Rep_q(G)) \to \RMod_{\cO_q(G)}(\Rep_q(G)).
-\end{align*}
-
-\item Now, we've seen that $\cO_q(G) \mapsto \cO_q^{FRT}(G) \in \Rep_q(G) \bt \Rep_q(G)$. Then under the factorizability map, this becomes the usual action of $\cO^{FRT}_q(G)$ by left/right multiplication. Then, under the functors above, we should obtain a module structure on $\cO_q(G)$, and it had better be the pairing $\Omega$ once we compose with $\epsilon$. To see this, it effectively suffices to understand how the map equiavelnce (\ref{eq-FRT-ordinary-modules}) works.
-
-\item In general, let $M$ be a module in the sense of the action of $\Rep_q(G) \bt \Rep_q(G)$ on $\Rep_q(G)$, for $\cO_q^{FRT}(G)$. So there will be maps $X^{\vee} \ot M \ot X \xrightarrow{\nabla} M$. Then one can check that $M$ has the structure of a right module for $\cO_q^{FRT}(G)$ under the action
-\begin{align*}
-M \ot X^{\vee} \ot X \xrightarrow{T(\nabla) \circ \sigma_{M, X^{\vee}}} M.
-\end{align*}
-And conversely, precompsing the maps for an action internal to $\Rep_q(G)$ with $\sigma_{M, X^{\vee}}^{-1}$ gives a functor the other way.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{img/module-equiv}
-\caption{The equivalence of modules for $\cO^{FRT}_q(G)$ and $\cO_q(G)$.}
-\label{f-module-equiv}
-\end{figure}
-
-Then, under this identification, we are almost there: just need to figure out how to write the self-action for $\cO^{FRT}_q(G)$ appropriately.
-\item There are two ways to interpret this. One is that under the above equivalence, the multiplication on $\cO_q^{FRT(G)}$ should be obtained from that on $\cO_q(G)$. Working this out, we'd then have the pairing of Figure \\ref{f-degen-pairing}.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{img/degen-pairing}
-\caption{The pairing suggested by the equivalence of internal and $FRT$ structures.}
-\label{f-degen-pairing}
-\end{figure}
-
-On the other hand, we recall that we're regarding $\cO_q(G)$ as $F(\One)$, where $F$ is the endofunctor for $\Rep_q(G)$ given by acting with $\cO_q(G)$. There is a clear way of giving this a module structure:
+\begin{proof}
+We know that this functor breaks down as
 \[
-F(\One) \ot \cO_q(G) \to F(\cO_q(G)) \xrightarrow{F(\epsilon)} F(\One)
+HC_{\cA}(\cC) = \cC \bt_{\cC^e_\cA} \cC \to \LMod_{\cO^{FRT}_q(G)}(\cC^e_\cA) \bt_{\cC^e_\cA} \cC \to \LMod^{\cC^e_{\cA}}_{\cO^{FRT}_q(G)}(\cC) \simeq \LMod^{\cC^e}_{o_q(G)}(\cC) \simeq \LMod_{o_q(G)}(\cC).
 \]
-which again gives the same pairing, see Fig. \ref{f-degen-pairing-2}.
+The first arrow comes from a monadicity theorem, and sends
+\[
+c \bt d \mapsto (\int^x (x^{\vee} \ot c) \bt x) \bt d.
+\]
+The second arrow sends $m \boxtimes v \mapsto m \ot v$ (categorical action). and so the first two arrows send $c \ot d$ to $\int^x x^{\vee} \ot c \ot d \ot x$. The next equivalence simply lifts equivalence classes of the relative tensor product, but we have already abused notation here. The final equivalence exchanges the action via the enveloping algebra for the action internal to $\cC$, and so it maps $\int^x x^{\vee} \ot c \ot d \ot x = o_q^{FRT}(G) \ot (c \ot d)$ to $o_q(G) \ot c \ot d$.
+\end{proof}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{img/degen-pairing-2}
-\caption{The pairing suggested by using the counit.}
-\label{f-degen-pairing-2}
-\end{figure}
+\begin{claim}
+The functor $\Phi$ is given by
+\[
+M \mapsto (V \mapsto triv_l(V) \ot_{o_q(G)} M = V \ot M^{inv}, \alpha)
+\]
+where $\alpha$ is simply the associator.
+\end{claim}
 
-\item However, this is not the pairing we want. Instead, we'd like the pairing shown in Fig. \ref{f-desired-pairing}.
+\begin{proof}
+To check this, we would like to show that the composition of the equivalence $\Psi : HC_{\cA}(\cC) \to \LMod_{o_q(G)}(\cC)$ with $\Phi$ is relative cofactorizability.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{img/desired-pairing}
-\caption{The pairing we would like suggests a particular form of multiplication.}
-\label{f-desired-pairing}
-\end{figure}
+We claimed above that $c \bt d$ maps to $o_q(G) \ot c \ot d$ under $\Psi$, that is, a free object. A morphism $f \bt g$ will become the morphism $1 \ot f \ot g$ in $\LMod_{o_q(G)}(\cC)$.
 
-And so, we'd like to say something like, multiplication should come from a map shown in the figure.
+Under $\Phi$ the object $\o_q(G) \ot c \ot d$ becomes the map
+\[
+v \mapsto v \ot c \ot d.
+\]
 
-However both source and target in this diagram are simply parts of the coend $\cO_q(G)$ (and not its product...).
+Note that morphisms $f: M \to N$ of $o_q(G)$-modules, will induce a morphism of diagrams
+% https://q.uiver.app/?q=WzAsNixbMCwwLCJWIFxcb3Qgb19xKEcpIFxcb3QgTSJdLFsxLDAsIlYgXFxvdCBNIl0sWzIsMCwiViBcXG90X3tvX3EoRyl9IE0iXSxbMCwxLCJWIFxcb3Qgb19xKEcpIFxcb3QgTiJdLFsxLDEsIlYgXFxvdCBOIl0sWzIsMSwiViBcXG90X3tvX3EoRyl9IE4iXSxbMCwxLCJhY3RfTSIsMCx7Im9mZnNldCI6LTF9XSxbMSwyXSxbMCwzLCIxIFxcb3QgMSBcXG90IGYiLDJdLFszLDQsImFjdF9NIiwwLHsib2Zmc2V0IjotMX1dLFs0LDVdLFsyLDVdLFsxLDQsIjEgXFxvdCBmIiwyXSxbMCwxLCJhY3RfViIsMix7Im9mZnNldCI6MX1dLFszLDQsImFjdF9WIiwyLHsib2Zmc2V0IjoxfV1d
+\[\begin{tikzcd}
+	{V \ot o_q(G) \ot M} & {V \ot M} & {V \ot_{o_q(G)} M} \\
+	{V \ot o_q(G) \ot N} & {V \ot N} & {V \ot_{o_q(G)} N}
+	\arrow["{act_M}", shift left=1, from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow["{1 \ot 1 \ot f}"', from=1-1, to=2-1]
+	\arrow["{act_M}", shift left=1, from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=1-3, to=2-3]
+	\arrow["{1 \ot f}"', from=1-2, to=2-2]
+	\arrow["{act_V}"', shift right=1, from=1-1, to=1-2]
+	\arrow["{act_V}"', shift right=1, from=2-1, to=2-2]
+\end{tikzcd}\]
+and hence a unique morphism of colimits. This defines the functor $\Phi$ on morphisms.
+
+In particular, if $M = o_q(G) \ot M', N = o_q(G) \ot N'$ are free modules, then one can check that the top and bottom coequalizers are given by $act_V$. Then if $f = 1 \ot f'$ is in the image of the free $o_q(G)$-module functor, we have that the right vertical arrow is given by $1 \ot f'$.
+
+Therefore, a map $f \bt g : c \bt d \to c' \bt d'$ in $HC_\cA(\cC)$ will become $1 \ot f \ot g$ in $\LMod_{o_q(G)}(\cC)$, and under $\Phi$ will become the natural transformation given by $1 \ot f \ot g$.
+
+Then this composition of $\Phi \circ \Psi$ is identified with relative factorizability via the inverse braiding $\sigma^{-1}_{v, c} \ot 1 : v \ot c \ot d \to c \ot v \ot d$. That this is a natural transformation simply uses the fact that one can slide functions through braidings. It is easy to check that this is a morphism in $\End_{\cA}(\cC)$, hence up to natural isomorphism we have given the correct functor. \pk{Note that since $\cA$ is the M\"{u}ger centre, we could also have taken $\sigma_{v, c}$ here.}
+\end{proof}
+
+Now we would like to compose $\Phi$ with the equivalence $\End_{\cA}(\cC) \to \LCoMod_{o_q(G)}(\cC)$. This breaks down as a composition
+\[
+\End_{\cA}(\cC) \xrightarrow{A} \cC \bt_{\cA} \cC \xrightarrow{B} \LCoMod_{o_q(G)}(\cC).
+\]
+
+\begin{claim}
+The functor $A$ is given by
+\[
+F \mapsto \int^x F(x^{\vee}) \bt x.
+\]
+\end{claim}
+
+\begin{proof}
+\pk{Complete this!}
+\end{proof}
+
+\begin{claim}
+The functor $B$ is given on underlying objects by $T : \cC \bt_{\cA} \cC \to \cC$, the relative tensor product.
+\end{claim}
+
+\begin{proof}
+The functor $B$ comes from the comonadicity theorem, applied to the comonad induced by $T \dashv T^R$ where $T : \cC \bt_\cA \cC \to \cC$ is te ``relative tensor product". Then the comparison functor is, on underlying objects, simply $T$. The comodule structure will be the free comodule structure coming from the unit for $o_q(G)$ as a bialgebra, i.e. $M \xrightarrow{\eta \ot 1} o_q(G) \ot M$.
+\end{proof}
+
+We note that the above comodule strucutre factors through the free $o_q^{FRT}(G)$-comodule strucutre, in the usual way.
+
+Putting together everything so far, we have a functor $B \circ A \circ \Phi : \LMod_{o_q(G)}(\cC) \to \LCoMod_{o_q(G)}(\cC)$ which takes $M$ to the object $o_q(G) \ot M^{inv}$ with the free comodule structure. In particular, we send free modules to free comodules, i.e. the diagram of Fig. \ref{(co)free-preserving-functor} commutes.
+
+Now, such a functor $F$ is specified by a certain pairing on $A$. As detailed in Appendix \ref{app-comod-mod-pairings}, the pairing is given by $\epsilon \circ F(m)$, and $F$ is an equivalence if and only if this pairing is nondegenerate.
+
+Therefore, we must ask where the map of $A$-modules $A \ot A \to A$ that is multiplication is sent, and it will then give us a pairing on postcomposing with the counit $\epsilon$ which we will show is nondegenerate.
+
+\begin{claim}
+The functor $\Phi$ sends the multiplication map $A \ot A \to A$ to the natural transformation given by the right-action $V \ot A \to V$, mapping $V \ot - \to \Id$.
+\end{claim}
+
+\begin{proof}
+We know that the natural transofrmation will be given by the unique vertical map making the diagram
+\[\begin{tikzcd}
+	{V \ot o_q(G) \ot o_q(G) \ot o_q(G)} & {V \ot o_q(G) \ot o_q(G)} & {V \ot o_q(G)} \\
+	{V \ot o_q(G) \ot o_q(G)} & {V \ot o_q(G)} & {V}
+	\arrow["{1 \ot m \ot 1}", shift left=1, from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow["{1 \ot 1 \ot m}"', from=1-1, to=2-1]
+	\arrow["{1 \ot m}", shift left=1, from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=1-3, to=2-3]
+	\arrow["{1 \ot m}"', from=1-2, to=2-2]
+	\arrow["{act_V \ot 1 \ot 1}"', shift right=1, from=1-1, to=1-2]
+	\arrow["{act_V}"', shift right=1, from=2-1, to=2-2]
+\end{tikzcd}\]
+commute.
+Consider the bottom row of this diagram. We claim that the map in this coequalizer is $act_V$. It is clear that this is a cofork. Moreover, given any cofork map $\phi : V \ot o_q(G) \to V$, this factors uniquely as $\tilde{\phi} \circ act_V$, where $\tilde{\phi} : V \to V : v \mapsto \phi(v \ot 1)$. So $act_V$ has the universal property.
+Similarly, the coequalizer for the top row of the diagram is $act_V \ot 1$.
+Now, by the definition of what it means to have a module structure, putting the map $act_V$ at the right vertical arrow makes the diagram commute. By uniqueness of the maps induced under colimits, this must be the image of the multiplication map under $\Phi$.
+\end{proof}
+
+Now, under the functors $B \circ A$, this involves putting maps on the left leg of a copy of $o_q(G)$. \pk{!?} Then recall that the right action on a trivial module is given diagramatically by \pk{DIAGRAM}, and so the pairing on $o_q(G)$ will be given by \pk{DIAGRAM} on correcting for FRT vs left/right versions of things \pk{!}. But we have already shown this pairing to be nondegenerate!
+
+This concludes the proof of relative cofactorizability.
+
+TODO:
+\begin{enumerate}
+\item Check the pairing-functor equivalence only depends on free objects; $F(m \ot 1) = F(m) \ot 1$.
+\item Complete claim 1.3, and check what happens for morphisms. See \cite[Thm. 1.11]{kalmykovCategoricalApproachDynamical2020} and \cite{hoyoisCategorifiedGrothendieckRiemannRochTheorem2020}. Should manage to go directly by establishing self-duality $\cA$-relatively, if you do it right, no need to factor through Gaitsgory's appendix.
+\item Go over the diagrams carefully and write it up.
 \end{enumerate}
-
-\section{The relative case}
-
-Need to fill this in: check that the pairing from the last section descends to $o_q(G)$ in the relative case.
 
 \begin{appendices}
 
 \section{Comodules and modules}
 \label{app-comod-mod-pairings}
 
-Let $\cC$ be a monoidal category, and $A$ a bialgebra object. Let $\Omega : A \ot A \to \One$ be a Hopf pairing, that is, a pairing such that the following diagrams commute.
-% https://q.uiver.app/?q=WzAsNSxbMCwwLCJBIFxcb3QgQSBcXG90IEEiXSxbNCwwLCJBIFxcb3QgQSJdLFswLDIsIkEgXFxvdCBBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFs0LDIsIkEiXSxbMCwxLCJcXG5hYmxhIFxcb3QgMSJdLFswLDIsIjEgXFxvdCAxIFxcb3QgXFxEZWx0YSIsMl0sWzIsMywiMSBcXG90IFxcT21lZ2EgXFxvdCAxIiwyXSxbMyw0LCJcXE9tZWdhIiwyXSxbMSw0LCJcXE9tZWdhIl1d
+Let $\cC$ be a monoidal category, $A$ an algebra objectand $C$ a coalgebra object. Suppose there is a functor $F : \LMod_A(\cC) \to \LCoMod_c(\cC)$ making the diagram in Fig. \ref{(co)free-preserving-functor} commute.
+\begin{figure}
+\centering
+% https://q.uiver.app/?q=WzAsMyxbMCwwLCJcXExNb2RfQShcXGNDKSJdLFsyLDAsIlxcTENvTW9kX0EoXFxjQykiXSxbMSwxLCJcXGNDIl0sWzAsMV0sWzIsMCwiZnJlZSJdLFsyLDEsImZyZWUiLDJdXQ==
+\begin{tikzcd}
+	{\LMod_A(\cC)} && {\LCoMod_A(\cC)} \\
+	& \cC
+	\arrow[from=1-1, to=1-3]
+	\arrow["free", from=2-2, to=1-1]
+	\arrow["cofree"', from=2-2, to=1-3]
+\end{tikzcd}
+\caption{Functors of interest.}
+\label{(co)free-preserving-functor}
+\end{figure}
+
+We will show here that such functors are in correspondence with pairings $\Omega : C \ot A \to \One$.
+
+First, recall that a free module has the property that
+\begin{align*}
+\Hom_A(A \ot M, X) &\cong \Hom(M, X)\\
+f &\mapsto f \circ (\eta \ot 1)\\
+act_X \circ (1 \ot g) &\mapsfrom g
+\end{align*}
+and a cofree comodule has the property that
+\begin{align*}
+\Hom_C(Y, C \ot N) &\cong \Hom(Y, N)\\
+f &\mapsto (\epsilon \ot 1) \circ f\\
+(1 \ot g) \circ coact_Y &\mapsfrom g.
+\end{align*}
+
+Now, to obtain a pairing from a functor $F$, we use the image of the identity map $A \to A \cong A \ot \One$ under the composite
+\[
+\Hom(A, A) \cong \Hom_{A}(A \ot A, A \ot \One) \xrightarrow{F} \Hom_C(C \ot A, C \ot \One) \cong \Hom(C \ot A, \One).
+\]
+So $F$ produces the pairing $\epsilon \circ F(m)$.
+
+Conversely, given a pairing $\Omega : C \ot A \to \One$, this induces a functor on free modules given by
+\begin{align*}
+\Hom_A(A \ot M, A \ot N) \to \Hom(M, A \ot N) \to \Hom(C \ot M, N) \to \Hom_C(C \ot M, C \ot N)\\
+f \mapsto f \circ (\eta \ot 1) \mapsto \Omega \circ (1 \ot f \circ (\eta \ot 1)) \mapsto (1 \ot \Omega \circ (1 \ot f \circ (\eta \ot 1))) \circ coact_{C \ot M}
+\end{align*}
+
+Now, let us begin with $\Omega$, induce a functor, and then induce a pairing. The resulting pairing is
+\[
+(\epsilon \ot 1) \circ (1 \ot \Omega \circ (1 \ot m \circ (\eta \ot 1))) \circ coact_A = (\epsilon \ot 1) \circ (1 \ot \Omega) \circ coact_{C \ot A}.
+\]
+Notice that if the pairing $\Omega$ has the property that
+\[
+(\epsilon \ot 1) \circ (1 \ot \Omega) \circ coact_{C \ot A} = \Omega
+\]
+then we are done.
+
+It remains to check that, given a functor $F$, then when we produce its associated copairing has the desired commutation property, and that the associated functor of this is $F$.
+
+The commutation property follows since $F$ takes free modules to free comodules, so sends $m$, a map of free modules, to a map $F(m)$ of free comodules. Then
+\[
+\epsilon \circ \epsilon \circ F(m) \circ coact_{C \ot A} = \epsilon \circ \epsilon \circ coact_C \circ F(m) = \epsilon \circ F(m)
+\]
+as desired.
+
+We \pk{claim} that a functor is specified by what it does on free modules, indeed on $A$, so it suffices to understand this.
+
+So what is the functor induced by $\epsilon \circ F(m)$? On free objects it takes $f : A \ot M \to A \ot N$ to the map
+\[
+C \ot M \xrightarrow{coact_{C \ot M}} C \ot C \ot M \xrightarrow{1 \ot 1 \ot \eta \ot 1} C \ot C \ot A \ot M \xrightarrow{1 \ot 1 \ot f} C \ot C \ot A \ot N \xrightarrow{1 \ot F(m) \ot 1} C \ot C \ot N \xrightarrow{1 \ot \epsilon} C \ot N.
+\]
+Notice that for $M = A, N = \One, f = m$ then the chain of inner arrows is just $F(m)$, and moreover this is a comodule map so that
+\[
+\epsilon \circ F(m) \circ coact_{C \ot A} = \epsilon \circ coact_C \circ F(m) = F(m).
+\]
+In other words, the functor induced by the pairing induced by $F$ sends $m$ to $F(m)$.
+
+More generally, let $f : A \ot M \to A \ot N$ be a map of free $A$-modules. Notice that the composition
+% https://q.uiver.app/?q=WzAsNSxbMCwwLCJBIFxcb3QgTSJdLFsxLDAsIkEgXFxvdCBBIFxcb3QgTSJdLFsyLDAsIkEgXFxvdCBNIl0sWzIsMSwiQSBcXG90IE4iXSxbMSwxLCJBIFxcb3QgQSBcXG90IE4iXSxbMCwxLCIxIFxcb3QgXFxldGEgXFxvdCAxIl0sWzEsMiwibSBcXG90IDEiXSxbMiwzLCJmIl0sWzEsNCwiMSBcXG90IGYiLDJdLFs0LDMsIm0gXFxvdCAxIiwyXV0=
 \[\begin{tikzcd}
-	{A \ot A \ot A} &&&& {A \ot A} \\
-	\\
-	{A \ot A \ot A \ot A} && {A \ot A} && \One
-	\arrow["{\nabla \ot 1}", from=1-1, to=1-5]
-	\arrow["{1 \ot 1 \ot \Delta}"', from=1-1, to=3-1]
-	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
-	\arrow["\Omega"', from=3-3, to=3-5]
-	\arrow["\Omega", from=1-5, to=3-5]
+	{A \ot M} & {A \ot A \ot M} & {A \ot M} \\
+	& {A \ot A \ot N} & {A \ot N}
+	\arrow["{1 \ot \eta \ot 1}", from=1-1, to=1-2]
+	\arrow["{m \ot 1}", from=1-2, to=1-3]
+	\arrow["f", from=1-3, to=2-3]
+	\arrow["{1 \ot f}"', from=1-2, to=2-2]
+	\arrow["{m \ot 1}"', from=2-2, to=2-3]
 \end{tikzcd}\]
-
-% https://q.uiver.app/?q=WzAsNSxbMCwwLCJBIFxcb3QgQSBcXG90IEEiXSxbNCwwLCJBIFxcb3QgQSJdLFswLDIsIkEgXFxvdCBBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFs0LDIsIkEiXSxbMCwxLCJcXG5hYmxhIFxcb3QgMSJdLFswLDIsIjEgXFxvdCAxIFxcb3QgXFxEZWx0YSIsMl0sWzIsMywiMSBcXG90IFxcT21lZ2EgXFxvdCAxIiwyXSxbMyw0LCJcXE9tZWdhIiwyXSxbMSw0LCJcXE9tZWdhIl1d
+is simply $f$. Also note that, since $F$ makes the diagram in Fig. \ref{(co)free-preserving-functor} commute, and since the (co)free (co)module functor sends $M \xrightarrow{g} N$ to $1 \ot g$, we have that $F(1 \ot g) = 1 \ot g$, so that applying $F$ to the above diagram gives that $F(f)$ factors as follows.
 \[\begin{tikzcd}
-	{A \ot A \ot A} &&&& {A \ot A} \\
-	\\
-	{A \ot A \ot A \ot A} && {A \ot A} && \One
-	\arrow["{1 \ot \nabla}", from=1-1, to=1-5]
-	\arrow["{\Delta \ot 1 \ot 1}"', from=1-1, to=3-1]
-	\arrow["{1 \ot \Omega \ot 1}"', from=3-1, to=3-3]
-	\arrow["\Omega"', from=3-3, to=3-5]
-	\arrow["\Omega", from=1-5, to=3-5]
+	{C \ot M} & {C \ot A \ot M} & {C \ot M} \\
+	& {C \ot A \ot N} & {C \ot N}
+	\arrow["{1 \ot \eta \ot 1}", from=1-1, to=1-2]
+	\arrow["{F(m \ot 1)}", from=1-2, to=1-3]
+	\arrow["F(f)", from=1-3, to=2-3]
+	\arrow["{1 \ot f}"', from=1-2, to=2-2]
+	\arrow["{F(m \ot 1)}"', from=2-2, to=2-3]
 \end{tikzcd}\]
+Then, if $F(m \ot 1) = F(m) \ot 1$, this establishes that the functor is recovered on free modules, \pk{hence on all modules}.
 
-% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzIsMCwiQSBcXG90IEEiXSxbMiwyLCJBIl0sWzAsMiwiQSBcXG90IEEiXSxbMCwxLCJcXGV0YSBcXG90IDEiXSxbMSwyLCJcXE9tZWdhIl0sWzAsMywiMSBcXG90IFxcZXRhIiwyXSxbMywyLCJcXE9tZWdhIiwyXSxbMCwyLCJcXGVwc2lsb24iLDJdXQ==
-\[\begin{tikzcd}
-	A && {A \ot A} \\
-	\\
-	{A \ot A} && \One
-	\arrow["{\eta \ot 1}", from=1-1, to=1-3]
-	\arrow["\Omega", from=1-3, to=3-3]
-	\arrow["{1 \ot \eta}"', from=1-1, to=3-1]
-	\arrow["\Omega"', from=3-1, to=3-3]
-	\arrow["\epsilon"', from=1-1, to=3-3]
-\end{tikzcd}\]
-
-Such a pairing allows us to give a functor $\RCoMod_A(\cC) \to \RMod_A(\cC)$, which commutes with the fiber functor to $\cC$, endowing $(V, \Delta_V) \in \RCoMod_A(\cC)$ with the module structure
-\[
-V \ot A \xrightarrow{\Delta_V \ot 1} V \ot A \ot A \xrightarrow{1 \ot \Omega} V \ot \One \cong V.
-\]
-
-Notice that this functor commutes with the fiber functor to $\cC$ and preserves free objects.
-
-Conversely, given a functor $F : \RCoMod_A(\cC) \to \RMod_A(\cC)$ which commutes with the fiber functor to $\cC$, we obtain a pairing $\Omega$ on $A$. The functor $F$ yeilds a module structure $\nabla_F : A \ot A \to A$ from the canonical comodule structure on $A$. Then we take
-\[
-A \ot A \xrightarrow{\nabla_F} A \xrightarrow{\epsilon} \One
-\]
-as the pairing $\Omega$.
-
-We claim these two constructions are inverse to one another, giving a correspondence between pairings and fiber-preserving fucntors $\RCoMod_A(\cC) \to \RMod_A(\cC)$.
-
-Given a pairing $\Omega$, we produce its associated functor $F$, and then the pairing associated to this functor, which is
-\[
-A \ot A \xrightarrow{\Delta \ot 1} A \ot A \ot A \xrightarrow{1 \ot \Omega} A \xrightarrow{\epsilon} \One
-\]
-or,
-\[
-\epsilon \circ (1 \ot \Omega) \circ (\Delta \circ 1) = \Omega \circ (\epsilon \ot 1 \ot 1) \circ (\Delta \circ 1) = \Omega
-\]
-where the first equality uses that we are working in a monoidal category and the last uses the counitality axiom.
-
-%in Sweedler's notation, sends
-%\[
-%a \ot b \mapsto a_{(1)} \ot a_{(2)} \ot b \mapsto a_{(1)}\Omega(a_{(2)}, b) \mapsto \epsilon(a_{(1)})\Omega(a_{(2)}, b) \mapsto \Omega(\epsilon(a_{(1)})a_{(2)}, b) = \Omega(a, b).
-%\]
-
-It remains to show that, given $F : \RCoMod_A(\cC) \to \RMod_A(\cC)$, then the functor associated to its associated pairing $\Omega_F$ is simply $F$ itself. We begin by checking this for the object $A$. Observe that the map $A \xrightarrow{\Delta} A \ot A$ is a map of right comodules by the coelagebra axioms. Then under the functor $F$, it becomes a map of right modules. Now, assuming that F preserves free objects, this implies that the following diagram commutes:
-% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIFxcb3QgQSJdLFsyLDAsIkEiXSxbMCwyLCJBIFxcb3QgQSBcXG90IEEiXSxbMiwyLCJBIFxcb3QgQSJdLFswLDEsIlxcbmFibGFfRiJdLFswLDIsIlxcRGVsdGEgXFxvdCAxIiwyXSxbMiwzLCIxIFxcb3QgXFxuYWJsYV9GIiwyXSxbMSwzLCJcXERlbHRhIl1d
-\[\begin{tikzcd}
-	{A \ot A} && A \\
-	\\
-	{A \ot A \ot A} && {A \ot A}
-	\arrow["{\nabla_F}", from=1-1, to=1-3]
-	\arrow["{\Delta \ot 1}"', from=1-1, to=3-1]
-	\arrow["{1 \ot \nabla_F}"', from=3-1, to=3-3]
-	\arrow["\Delta", from=1-3, to=3-3]
-\end{tikzcd}\]
-
-Now, notice that the functor associated to $\Omega_F$ yeilds the following module structure on $A$:
-\[
-A \ot A \xrightarrow{\Delta \ot 1} A \ot A \ot A \xrightarrow{1 \ot \nabla_F} A \ot A \xrightarrow{1 \ot \epsilon} A
-\]
-but since the first two arrows are the bottom leg of the above commutative square, we have that this is
-\[
-(1 \ot \epsilon) \circ \Delta \circ \nabla_F = \nabla_F
-\]
-using the coalgebra axioms.
-
-We have therefore established a correspondence
+We have therefore shown that there is a 1:1 correspondence
 \begin{equation*}
         \left\{\begin{array}{c}
-        \text{Hopf pairings}\\
-        \text{$\Omega : A \ot A \to \One$}
+        \text{Pairings}\\
+        \text{$\Omega : C \ot A \to \One$ s.t.}\\
+        (\epsilon \ot 1) \circ (1 \ot \Omega) \circ coact_{C \ot A} = \Omega
         \end{array}\right\}
         \xleftrightarrow{1:1}
         \left\{\begin{array}{c}
-        \text{Functors $\RCoMod_A(\cC) \to \RMod_A(\cC)$}\\
-        \text{commuting with fiber functor}\\
-        \text{and preserving free objects.}
+        \text{Functors $\LMod_A(\cC) \to \LCoMod_C(\cC)$}\\
+        \text{such that the diagram in}\\
+        \text{Fig. \ref{(co)free-preserving-functor} commutes.}
         \end{array}\right\}.
 \end{equation*}
 
-Dually, one can establish a correspondence
-\begin{equation*}
-        \left\{\begin{array}{c}
-        \text{Co-Hopf co-pairings}\\
-        \text{$\mho : \One \to A \ot A$}
-        \end{array}\right\}
-        \xleftrightarrow{1:1}
-        \left\{\begin{array}{c}
-        \text{Functors $\RMod_A(\cC) \to \RCoMod_A(\cC)$}\\
-        \text{commuting with fiber functor}\\
-        \text{and preserving free objects.}
-        \end{array}\right\}.
-\end{equation*}
+Now consider the situation where $A$ and $C$ are finite-dimenstional. Then we claim that the functor associated to a pairing $\Omega$ is an equivalence if and only if $\Omega$ is nondegenerate.
 
-We will say a Hopf pairing $\Omega$ is nondegenerate if there exists a co-Hopf co-pairing $\mho$ such that $\mho \circ \Omega = \Id_{A \ot A}$ and $\Omega \circ \mho = \Id_{\One}$. Now, it is clear that when $\Omega$ is nonegenerate, the functor $F_\Omega : \RCoMod_A(\cC) \to \RMod_A(\cC)$ is an equivalence.
-
-Since the functors from pairings commute with the fiber functor to $\cC$, it is clear that they are always fully faithful functors. It remains to check essential surjectivity.
-
-
-DUALLY
-
-We want to say co-pairings $\One \to A \ot A$ correspond to functors $\RMod_A(\cC) \to \RCoMod_A(\cC)$. Given such a functor $F$, it gives $(A, \nabla)$ a comodule structure $\Delta_F$, and induces the co-pairing
-\[
-\One \xrightarrow{\eta} A \xrightarrow{\Delta_F} A \ot A.
-\]
-This in turn gives a functor $\RMod_A(\cC) \to \RCoMod_A(\cC)$, which takes $(A, \nabla)$ to the comodule structure
-\[
-A \xrightarrow{1 \ot \eta} A \ot A \xrightarrow{1 \ot \Delta_F} A \ot A \ot A \xrightarrow{\nabla \ot 1} A \ot A
-\]
-sending $a \mapsto (\nabla \ot 1)(a \ot \Delta_F(1))$. If $\Delta_F$ is a map of LEFT $A$-modules, then this should suffice to show that going from a functor to its copairing to its functor is the identity.
-
-Why is $\Delta_F$ a map of LEFT $A$-modules?
-
-Recall that $A$ is a right $A$ module, and there is a canonical equivalence $\End(A_A) \cong A$. Now, since $F$ is a functor $\RMod_A(\cC) \to \RCoMod_A(\cC)$, then for any map $\phi : A \to A$ of $A$-modules, this must also be a map of the correspondong comodules under $F$, i.e. the diagram
-% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzIsMCwiQSBcXG90IEEiXSxbMCwyLCJBIl0sWzIsMiwiQSBcXG90IEEiXSxbMCwxLCJcXERlbHRhX0YiXSxbMCwyLCJcXHBoaSIsMl0sWzIsMywiXFxEZWx0YV9GIiwyXSxbMSwzLCJcXHBoaSBcXG90IDEiXV0=
-\[\begin{tikzcd}
-	A && {A \ot A} \\
-	\\
-	A && {A \ot A}
-	\arrow["{\Delta_F}", from=1-1, to=1-3]
-	\arrow["\phi"', from=1-1, to=3-1]
-	\arrow["{\Delta_F}"', from=3-1, to=3-3]
-	\arrow["{\phi \ot 1}", from=1-3, to=3-3]
-\end{tikzcd}\]
-commutes. But taking $\phi$ to be left-multiplication in $A$, which  we can do by the above isomorphism, we see that commutativity of the square says $\Delta_F$ is a map of left $A$-modules.
-
-So we see that $F$ is recovered for $A$. Now let us show that it is recovered for any module $M$.
-
-Given any map $A \xrightarrow{f} M$ of right $A$-modules, under $F$ it becomes a map of right $A$-comodules, so that
-\[\begin{tikzcd}
-	A && {A \ot A} \\
-	\\
-	M && {M \ot A}
-	\arrow["{\Delta_F}", from=1-1, to=1-3]
-	\arrow["f"', from=1-1, to=3-1]
-	\arrow["{\Delta_F}"', from=3-1, to=3-3]
-	\arrow["{f \ot 1}", from=1-3, to=3-3]
-\end{tikzcd}\]
-commutes. Then letting $f$ be the map sending $1_A \mapsto m \in M$, we have that $\Delta_F(m) = (f \ot 1)\Delta_F(1_A)$. So the comodule structure under $F$ for $M$ is determined by the comodule strucutre for $A$, and it follows that we have preservation for modules.
+Since the functor makes the diagram in Figure \ref{(co)free-preserving-functor} commute, it \pk{must be} essentially surjective. To check that it is fully faithful it suffices to check that the function
+\begin{align*}
+\Hom(M, A \ot N) &\to \Hom(C \ot M, N)\\
+f &\mapsto (\Omega \ot 1) \circ (1 \ot f)
+\end{align*}
+is a bijection. We notice that this factors as
+\begin{align*}
+\Hom(M, A \ot N) &\to \Hom(M, C^* \ot N) &\xrightarrow{\cong} \Hom(C \ot M, N)\\
+f &\mapsto (\omega \ot 1) \circ f &\mapsto (ev \ot 1) \circ (1 \ot ((\omega \ot 1) \circ f))
+\end{align*}
+where $\omega : A \to C^*$ is the homomorphism induced by $\Omega$, with the property that $(ev \ot 1) \circ (1 \ot \omega) = \Omega$. Then clearly the above function is a bijection if and only if $\omega$ is an isomorphism, which is true if and only if $\Omega$ is non-degenerate.
 
 \end{appendices}
 
